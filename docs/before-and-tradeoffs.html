@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before &amp; trade-offs — Learn ArgoCD School</title>
+<meta name="description" content="For every big CI/CD and GitOps idea: what the world looked like before it, its merits and demerits, and where to use it vs where not.">
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #475569;
+    --line: #e2e8f0; --accent: #ea580c; --ok: #16a34a; --blue: #2563eb; --bad: #dc2626;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1220; --card: #131c2e; --ink: #e2e8f0; --muted: #94a3b8; --line: #253349; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 28px 20px 60px; }
+  a { color: var(--blue); }
+  h1 { font-size: 1.9rem; line-height: 1.25; }
+  .sub { color: var(--muted); max-width: 74ch; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 6px; }
+  .toc a { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 12px; font-size: .82rem; color: var(--muted); text-decoration: none; }
+  .toc a:hover { color: var(--ink); border-color: var(--muted); }
+  .term { background: var(--card); border: 1px solid var(--line); border-top: 6px solid var(--c, var(--accent)); border-radius: 16px; padding: 22px; margin-top: 26px; scroll-margin-top: 16px; }
+  .term h2 { font-size: 1.3rem; margin-bottom: 10px; }
+  .hist { background: var(--bg); border-left: 5px solid var(--c, var(--accent)); border-radius: 10px; padding: 14px 16px; margin: 10px 0 14px; }
+  .hist b { display: block; margin-bottom: 4px; }
+  .hist p { color: var(--muted); font-size: .95rem; }
+  .quad { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .q { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .q h4 { margin-bottom: 6px; font-size: .98rem; }
+  .q ul { margin-left: 18px; color: var(--muted); font-size: .92rem; }
+  .q.merit  { border-top: 4px solid var(--ok); }
+  .q.demerit{ border-top: 4px solid var(--bad); }
+  .q.use    { border-top: 4px solid var(--blue); }
+  .q.avoid  { border-top: 4px solid #f59e0b; }
+  .foot { margin-top: 10px; font-size: .92rem; }
+  footer { margin-top: 44px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: .88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p><a href="index.html">← Back to the course home</a></p>
+  <h1>⏮️ Before &amp; trade-offs</h1>
+  <p class="sub">Every tool replaced something worse — and is itself the wrong tool somewhere.
+  For each big idea in this course: what life was like <b>before</b> it, its honest
+  <b>merits ✅ and demerits ❌</b>, and <b>where to use it 👍 vs where not 👎</b>.</p>
+  <nav class="toc">
+    <a href="#cicd">📮 CI/CD</a><a href="#gitops">📖 GitOps</a>
+    <a href="#argocd">🤖 ArgoCD</a><a href="#templates">📚 Helm/Kustomize</a>
+    <a href="#secrets">🔐 GitOps secrets</a>
+  </nav>
+</header>
+
+<section class="term" id="cicd" style="--c:#dc2626">
+  <h2>📮 CI/CD pipelines — lesson 03</h2>
+  <div class="hist"><b>⏮️ Before CI/CD</b>
+    <p><b>FTP Fridays.</b> One anointed "deploy person", a printed release checklist, a maintenance
+    window at midnight, and tests run "when there's time". Integration happened once a month and
+    was named "integration hell" for a reason. CI (2000s) made every push tested; CD made every
+    good build shippable.</p>
+  </div>
+  <div class="quad">
+    <div class="q merit"><h4>✅ Merits</h4><ul>
+      <li>every change tested, built, and traceable</li>
+      <li>no human steps to forget</li>
+      <li>deploys become boring (the goal!)</li>
+    </ul></div>
+    <div class="q demerit"><h4>❌ Demerits</h4><ul>
+      <li>pipelines are code you must maintain</li>
+      <li>push-style: cluster keys live in CI (lesson 04)</li>
+      <li>blind between runs — drift goes unnoticed</li>
+    </ul></div>
+    <div class="q use"><h4>👍 Use when</h4><ul>
+      <li>honestly: almost always — any team, any repo</li>
+      <li>at minimum: CI (tests + builds) from day one</li>
+    </ul></div>
+    <div class="q avoid"><h4>👎 Think twice when</h4><ul>
+      <li>a throwaway prototype you'll delete next week</li>
+      <li>…that's about it. CI earns its keep everywhere.</li>
+    </ul></div>
+  </div>
+  <p class="foot"><a href="lesson-diagrams.html#l03">Diagram ↗</a></p>
+</section>
+
+<section class="term" id="gitops" style="--c:#16a34a">
+  <h2>📖 GitOps — lesson 05</h2>
+  <div class="hist"><b>⏮️ Before GitOps (term coined 2017)</b>
+    <p>Ops knowledge lived in <b>wiki runbooks, shell history and heads</b>. Clusters were changed
+    imperatively (kubectl by hand, CI push), so "what's running?" and "who changed it?" had no
+    reliable answer — Part 1 of this course is a museum tour of exactly that world.</p>
+  </div>
+  <div class="quad">
+    <div class="q merit"><h4>✅ Merits</h4><ul>
+      <li>git = single source of truth; audit for free</li>
+      <li>drift detected and reverted continuously</li>
+      <li>rollback = git revert; DR = re-apply the repo</li>
+      <li>changes reviewed like code (PRs)</li>
+    </ul></div>
+    <div class="q demerit"><h4>❌ Demerits</h4><ul>
+      <li>ceremony: every change rides through git (hotfix latency)</li>
+      <li>secrets need extra machinery (below)</li>
+      <li>"break glass" emergencies need an agreed process</li>
+      <li>one more mental model for the team</li>
+    </ul></div>
+    <div class="q use"><h4>👍 Use when</h4><ul>
+      <li>Kubernetes + more than one env/cluster/team</li>
+      <li>compliance/audit questions actually get asked</li>
+    </ul></div>
+    <div class="q avoid"><h4>👎 Think twice when</h4><ul>
+      <li>no Kubernetes — GitOps tooling is k8s-shaped</li>
+      <li>solo prototyping where speed beats ceremony</li>
+    </ul></div>
+  </div>
+  <p class="foot"><a href="lesson-diagrams.html#l05">Diagram ↗</a></p>
+</section>
+
+<section class="term" id="argocd" style="--c:#16a34a">
+  <h2>🤖 ArgoCD (the tool) — lessons 06–10</h2>
+  <div class="hist"><b>⏮️ Before ArgoCD (2018, CNCF-graduated 2022)</b>
+    <p>GitOps existed as scripts: Jenkins jobs running kubectl-apply on a timer, or early
+    <b>Flux</b> (the other great GitOps agent — same loop, no UI). Heavyweight deploy platforms
+    like Spinnaker did more but cost an ops team to run. ArgoCD won hearts with the visual
+    app-tree UI.</p>
+  </div>
+  <div class="quad">
+    <div class="q merit"><h4>✅ Merits</h4><ul>
+      <li>the UI: see every app, diff, sync state at a glance</li>
+      <li>app-of-apps + multi-cluster from one place</li>
+      <li>SSO/RBAC for teams; huge community</li>
+    </ul></div>
+    <div class="q demerit"><h4>❌ Demerits</h4><ul>
+      <li>one more controller to run, upgrade and secure</li>
+      <li>k8s-only — it deploys nothing else</li>
+      <li>misconfigured UI perms can bypass git review</li>
+    </ul></div>
+    <div class="q use"><h4>👍 Use when</h4><ul>
+      <li>several apps/envs/clusters, humans want visibility</li>
+      <li>teams need RBAC'd, self-service deploys</li>
+    </ul></div>
+    <div class="q avoid"><h4>👎 Think twice when</h4><ul>
+      <li>one app, one cluster → Flux (lighter) or CI push is fine</li>
+      <li>non-k8s targets (Lambda, VMs) → different tools</li>
+    </ul></div>
+  </div>
+  <p class="foot"><a href="lesson-diagrams.html#l07">Diagrams ↗</a></p>
+</section>
+
+<section class="term" id="templates" style="--c:#16a34a">
+  <h2>📚 Helm &amp; Kustomize — lesson 11</h2>
+  <div class="hist"><b>⏮️ Before templating</b>
+    <p><b>Copy-paste YAML per environment</b> — dev/staging/prod folders that started identical and
+    drifted apart typo by typo (copy-paste drift is lesson 02's disease wearing YAML). Or worse:
+    sed scripts in CI rewriting manifests nobody could preview.</p>
+  </div>
+  <div class="quad">
+    <div class="q merit"><h4>✅ Merits</h4><ul>
+      <li>one source of truth + small per-env diffs</li>
+      <li>the difference between envs is readable in git</li>
+      <li>ArgoCD renders both natively</li>
+    </ul></div>
+    <div class="q demerit"><h4>❌ Demerits</h4><ul>
+      <li>Helm templating can become {{ unreadable }} soup</li>
+      <li>Kustomize gets verbose for big variance</li>
+      <li>you debug the RENDERED output, not the source</li>
+    </ul></div>
+    <div class="q use"><h4>👍 Use when</h4><ul>
+      <li>2+ environments of the same app (the classic case)</li>
+      <li>installing third-party software (Helm charts)</li>
+    </ul></div>
+    <div class="q avoid"><h4>👎 Think twice when</h4><ul>
+      <li>one env, a handful of files — plain YAML wins</li>
+      <li>templating for hypothetical future envs (YAGNI)</li>
+    </ul></div>
+  </div>
+  <p class="foot"><a href="lesson-diagrams.html#l11">Diagram ↗</a></p>
+</section>
+
+<section class="term" id="secrets" style="--c:#16a34a">
+  <h2>🔐 GitOps secrets: Sealed Secrets vs External Secrets — lesson 12</h2>
+  <div class="hist"><b>⏮️ Before proper GitOps secrets</b>
+    <p>Either secrets were <b>pasted into git</b> (published forever — git never forgets), or they
+    lived <b>outside GitOps entirely</b> (hand-applied Secret files the robot couldn't manage —
+    drift by design). Both ended in incident reports.</p>
+  </div>
+  <div class="quad">
+    <div class="q merit"><h4>✅ Sealed Secrets shine</h4><ul>
+      <li>self-contained: just one controller, no vault needed</li>
+      <li>encrypted blob lives IN the repo — pure GitOps</li>
+      <li>simple mental model (locked box in the book)</li>
+    </ul></div>
+    <div class="q demerit"><h4>❌ Their limits</h4><ul>
+      <li>rotation = re-seal and re-commit every secret</li>
+      <li>cluster rebuilt = new key = re-seal everything</li>
+      <li>no central place to see/rotate all secrets</li>
+    </ul></div>
+    <div class="q use"><h4>👍 External Secrets shine</h4><ul>
+      <li>secrets live in AWS SM / Vault — rotation built in</li>
+      <li>one vault serves many clusters and apps</li>
+      <li>git holds only harmless pointers</li>
+    </ul></div>
+    <div class="q avoid"><h4>❌ Their limits</h4><ul>
+      <li>depends on an external store + one more operator</li>
+      <li>the vault becomes critical infrastructure</li>
+      <li>slightly less "everything is in the repo"</li>
+    </ul></div>
+  </div>
+  <p class="foot">Rule of thumb: small/self-hosted → Sealed Secrets · cloud with a secret manager → External Secrets. <a href="lesson-diagrams.html#l12">Diagram ↗</a></p>
+</section>
+
+<footer>
+  Learn ArgoCD School · <a href="index.html">Course home</a> ·
+  <a href="lesson-diagrams.html">Lesson diagrams</a> ·
+  <a href="https://github.com/BaluRaut/learn-argocd-school">github.com/BaluRaut/learn-argocd-school</a>
+</footer>
+
+</div>
+</body>
+</html>
