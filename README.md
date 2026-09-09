@@ -12,6 +12,10 @@ every lesson as a numbered box-and-arrow diagram.
 > [learn-kubernetes-school](https://github.com/BaluRaut/learn-kubernetes-school) (pods,
 > deployments, services, rollouts). If those words are comfortable, you're ready.
 
+## 🗺️ The big picture — one diagram, both worlds
+
+![The big picture: deploying without ArgoCD vs with ArgoCD](docs/images/big-picture-4k.png)
+
 ## 🎓 The 12 lessons
 
 Each numbered branch adds ONE lesson folder (`lessons/NN-topic/README.md`) with an

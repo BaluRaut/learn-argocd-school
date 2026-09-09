@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1160" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <style>
+    .band1 { fill: #fff; stroke: #dc2626; stroke-width: 3; }
+    .band2 { fill: #fff; stroke: #16a34a; stroke-width: 3; }
+    .bx  { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; }
+    .bxr { fill: #fff; stroke: #dc2626; stroke-width: 2.5; }
+    .bxg { fill: #fff; stroke: #16a34a; stroke-width: 2.5; }
+    .warn { fill: #fef2f2; stroke: #dc2626; stroke-width: 1.5; stroke-dasharray: 7 6; }
+    .good { fill: #f0fdf4; stroke: #16a34a; stroke-width: 1.5; }
+    .title { font-size: 36px; font-weight: 800; fill: #0f172a; }
+    .bandt { font-size: 26px; font-weight: 800; }
+    .t  { font-size: 19px; font-weight: 600; fill: #0f172a; }
+    .s  { font-size: 15px; fill: #475569; }
+    .m  { text-anchor: middle; }
+    .arr  { stroke: #64748b; stroke-width: 2.5; fill: none; marker-end: url(#arw); }
+    .dash { stroke-dasharray: 8 7; }
+    .ntr { font-size: 15px; font-weight: 700; fill: #fff; text-anchor: middle; }
+  </style>
+
+  <rect x="0" y="0" width="1920" height="1160" fill="#ffffff"/>
+  <text class="title m" x="960" y="52">The Big Picture — deploying WITHOUT vs WITH ArgoCD</text>
+
+  <!-- ═══════════════ BAND 1: WITHOUT ═══════════════ -->
+  <rect class="band1" x="40" y="80" width="1840" height="460" rx="20"/>
+  <text class="bandt" x="70" y="122" fill="#dc2626">🚪 WITHOUT ArgoCD — the PUSH model (lessons 1–4)</text>
+
+  <rect class="bxr" x="70" y="200" width="220" height="120" rx="14"/>
+  <text class="t m" x="180" y="250">🧑‍💻 dev</text>
+  <text class="s m" x="180" y="278">git push</text>
+
+  <rect class="bxr" x="360" y="200" width="240" height="120" rx="14"/>
+  <text class="t m" x="480" y="245">📄 app repo</text>
+  <text class="s m" x="480" y="273">code + k8s YAML</text>
+  <text class="s m" x="480" y="295">(nobody enforces it)</text>
+
+  <rect class="bxr" x="670" y="170" width="520" height="200" rx="14"/>
+  <text class="t m" x="930" y="205">📮 CI/CD — the courier robot</text>
+  <rect class="bx" x="690" y="230" width="110" height="80" rx="10"/>
+  <text class="s m" x="745" y="265">✅ test</text>
+  <rect class="bx" x="815" y="230" width="110" height="80" rx="10"/>
+  <text class="s m" x="870" y="265">🍱 build</text>
+  <rect class="bx" x="940" y="230" width="110" height="80" rx="10"/>
+  <text class="s m" x="995" y="258">🗄️ push to</text>
+  <text class="s m" x="995" y="280">registry</text>
+  <rect class="bx" x="1065" y="230" width="105" height="80" rx="10"/>
+  <text class="s m" x="1117" y="258">✍️ wait for</text>
+  <text class="s m" x="1117" y="280">approval</text>
+  <text class="s m" x="930" y="345">…and it carries the cluster's master key 🔑</text>
+
+  <rect class="bxr" x="1450" y="170" width="400" height="220" rx="14"/>
+  <text class="t m" x="1650" y="208">🏫 cluster</text>
+  <rect class="bx" x="1490" y="235" width="150" height="90" rx="10"/>
+  <text class="s m" x="1565" y="272">🪑🪑 pods</text>
+  <text class="s m" x="1565" y="296">now on v2</text>
+  <text class="s m" x="1745" y="272">unguarded</text>
+  <text class="s m" x="1745" y="296">after 14:03…</text>
+
+  <line class="arr" x1="290" y1="260" x2="356" y2="260"/>
+  <g transform="translate(323,240)"><circle r="13" fill="#dc2626"/><text class="ntr" dy="5">1</text></g>
+  <line class="arr" x1="600" y1="260" x2="666" y2="260"/>
+  <g transform="translate(633,240)"><circle r="13" fill="#dc2626"/><text class="ntr" dy="5">2</text></g>
+  <line class="arr" x1="1190" y1="270" x2="1446" y2="270"/>
+  <g transform="translate(1318,250)"><circle r="13" fill="#dc2626"/><text class="ntr" dy="5">3</text></g>
+  <text class="s m" x="1318" y="305">kubectl apply — PUSHED from outside 🔑</text>
+
+  <rect class="warn" x="70" y="420" width="420" height="90" rx="14"/>
+  <text class="s m" x="280" y="458">🪑 drift creeps back between deploys</text>
+  <text class="s m" x="280" y="483">— and NOTHING is watching</text>
+  <rect class="warn" x="530" y="420" width="400" height="90" rx="14"/>
+  <text class="s m" x="730" y="458">🔑 cluster credentials live OUTSIDE</text>
+  <text class="s m" x="730" y="483">in the CI system's secret store</text>
+  <rect class="warn" x="970" y="420" width="400" height="90" rx="14"/>
+  <text class="s m" x="1170" y="458">🧾 "what's live right now?"</text>
+  <text class="s m" x="1170" y="483">CI logs say what was SENT, not what IS</text>
+  <rect class="warn" x="1410" y="420" width="440" height="90" rx="14"/>
+  <text class="s m" x="1630" y="458">🏫×10 clusters = 10 keys,</text>
+  <text class="s m" x="1630" y="483">10 pipeline configs to maintain</text>
+  <g transform="translate(70,420)"><circle r="13" fill="#dc2626"/><text class="ntr" dy="5">4</text></g>
+
+  <!-- ═══════════════ divider ═══════════════ -->
+  <text class="t m" x="960" y="578" fill="#475569">same CI, different last step — the courier 📮 builds, the caretaker 🤖 deploys</text>
+
+  <!-- ═══════════════ BAND 2: WITH ═══════════════ -->
+  <rect class="band2" x="40" y="600" width="1840" height="520" rx="20"/>
+  <text class="bandt" x="70" y="642" fill="#16a34a">📖 WITH ArgoCD — the GitOps PULL model (lessons 5–12)</text>
+
+  <rect class="bxg" x="70" y="700" width="220" height="120" rx="14"/>
+  <text class="t m" x="180" y="750">🧑‍💻 dev</text>
+  <text class="s m" x="180" y="778">PR → review → merge</text>
+
+  <rect class="bxg" x="360" y="690" width="260" height="140" rx="14"/>
+  <text class="t m" x="490" y="732">📖 git = the plan book</text>
+  <text class="s m" x="490" y="760">k8s/ manifests</text>
+  <text class="s m" x="490" y="784">the SINGLE source of truth</text>
+
+  <rect class="bxg" x="690" y="690" width="430" height="140" rx="14"/>
+  <text class="t m" x="905" y="726">📮 CI still exists!</text>
+  <text class="s m" x="905" y="754">✅ test → 🍱 build → 🗄️ registry</text>
+  <text class="s m" x="905" y="782">last step: COMMIT new image tag</text>
+  <text class="s m" x="905" y="804">into the book (no cluster key!)</text>
+
+  <rect class="bxg" x="1190" y="650" width="660" height="290" rx="16"/>
+  <text class="t m" x="1520" y="688">🏫 cluster — guards itself</text>
+  <rect class="bx" x="1220" y="720" width="280" height="150" rx="12"/>
+  <text class="t m" x="1360" y="758">🤖 ArgoCD</text>
+  <text class="s m" x="1360" y="786">lives INSIDE · pulls every ~3 min</text>
+  <text class="s m" x="1360" y="810">selfHeal ↩️ · prune 🗑️</text>
+  <rect class="bx" x="1560" y="720" width="250" height="150" rx="12"/>
+  <text class="s m" x="1685" y="762">🪑🪑 pods</text>
+  <text class="s m" x="1685" y="790">always matching</text>
+  <text class="s m" x="1685" y="814">the book</text>
+  <text class="s m" x="1520" y="912">a kid scales pods by hand? reverted in minutes — the book wins ↩️</text>
+
+  <line class="arr" x1="290" y1="760" x2="356" y2="760"/>
+  <g transform="translate(323,740)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">1</text></g>
+  <line class="arr" x1="690" y1="730" x2="624" y2="730"/>
+  <g transform="translate(657,710)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">3</text></g>
+  <text class="s m" x="657" y="762">tag → book</text>
+  <g transform="translate(1120,690)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">2</text></g>
+  <polyline class="arr dash" points="1230,862 905,882 640,822"/>
+  <g transform="translate(905,882)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">4</text></g>
+  <text class="s m" x="905" y="915">PULLS the book from inside — no outside key ever</text>
+  <line class="arr" x1="1500" y1="795" x2="1556" y2="795"/>
+  <g transform="translate(1528,775)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">5</text></g>
+
+  <rect class="good" x="70" y="960" width="400" height="110" rx="14"/>
+  <text class="s m" x="270" y="1002">⏪ rollback = git revert</text>
+  <text class="s m" x="270" y="1030">10 seconds, no pipeline re-run</text>
+  <rect class="good" x="510" y="960" width="400" height="110" rx="14"/>
+  <text class="s m" x="710" y="1002">🧾 git log = deploy log</text>
+  <text class="s m" x="710" y="1030">who, what, when — audit for free</text>
+  <rect class="good" x="950" y="960" width="400" height="110" rx="14"/>
+  <text class="s m" x="1150" y="1002">↩️ drift detected + reverted</text>
+  <text class="s m" x="1150" y="1030">continuously, not just at deploys</text>
+  <rect class="good" x="1390" y="960" width="460" height="110" rx="14"/>
+  <text class="s m" x="1620" y="1002">🏫×10 clusters = 10 agents</text>
+  <text class="s m" x="1620" y="1030">pulling the same book — keys stay home</text>
+  <g transform="translate(70,960)"><circle r="13" fill="#16a34a"/><text class="ntr" dy="5">6</text></g>
+</svg>
