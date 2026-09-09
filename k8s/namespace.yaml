@@ -1,0 +1,7 @@
+# The classroom for this course's demo app. Apply first:
+#   kubectl apply -f k8s/namespace.yaml
+# (ArgoCD can also create it for us — see argocd/application.yaml)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitops-school

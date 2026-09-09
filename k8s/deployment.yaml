@@ -1,0 +1,44 @@
+# The demo app for the whole course: a tiny web server that prints its
+# hostname — perfect for SEEING which pod answered and watching rollouts.
+#
+# NOTE: a real public image (no placeholders!) so ArgoCD can deploy this
+# repo as-is. In the lessons you'll change replicas / image tag IN GIT and
+# watch the cluster follow.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-school
+  namespace: gitops-school
+  labels:
+    app: hello-school
+spec:
+  replicas: 2                      # ← lesson 09: change this in git, watch ArgoCD sync it
+  selector:
+    matchLabels:
+      app: hello-school
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hello-school
+    spec:
+      containers:
+        - name: hello-school
+          image: nginxdemos/hello:plain-text   # ← lesson 10: roll back by git revert
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet: { path: /, port: 80 }
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /, port: 80 }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests: { cpu: 50m, memory: 32Mi }
+            limits: { cpu: 200m, memory: 64Mi }

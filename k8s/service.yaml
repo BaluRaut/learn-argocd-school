@@ -1,0 +1,15 @@
+# Stable address for the demo pods. Test from inside the cluster:
+#   kubectl -n gitops-school run t --rm -it --image=curlimages/curl --restart=Never \
+#     -- curl -s http://hello-school
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-school
+  namespace: gitops-school
+spec:
+  type: ClusterIP
+  selector:
+    app: hello-school
+  ports:
+    - port: 80
+      targetPort: 80

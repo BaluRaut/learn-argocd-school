@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn ArgoCD the school way — with & without GitOps</title>
+<meta name="description" content="12 branch-by-branch lessons: deploying WITHOUT ArgoCD (by hand, CI/CD push) vs WITH ArgoCD (GitOps pull) — ELI5 school analogies, diagrams and hands-on labs.">
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #475569;
+    --line: #e2e8f0; --accent: #ea580c; --ok: #16a34a; --blue: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1220; --card: #131c2e; --ink: #e2e8f0; --muted: #94a3b8; --line: #253349; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+  a { color: var(--blue); }
+  h1 { font-size: 2rem; line-height: 1.25; }
+  h2 { font-size: 1.4rem; margin: 44px 0 6px; }
+  .sub { color: var(--muted); max-width: 74ch; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+  .chip { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px; font-size: .85rem; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+  .lesson { background: var(--card); border: 1px solid var(--line); border-top: 5px solid var(--c, var(--accent)); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .lesson .top { display: flex; align-items: center; gap: 10px; }
+  .lesson .num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--c, var(--accent)); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: .9rem; }
+  .lesson h3 { font-size: 1.02rem; line-height: 1.3; }
+  .lesson .ana { color: var(--muted); font-size: .9rem; }
+  .lesson code { font-size: .78rem; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+  .lesson a.go { margin-top: auto; font-weight: 600; font-size: .9rem; text-decoration: none; }
+  .lesson a.go + a.go { margin-top: 0; }
+  .lesson a.go:hover { text-decoration: underline; }
+  .callout { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--ok); border-radius: 14px; padding: 18px 20px; margin-top: 16px; }
+  pre { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: .88rem; margin-top: 12px; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; border-radius: 10px; padding: 10px 18px; text-decoration: none; font-weight: 700; margin: 14px 10px 0 0; }
+  .btn.alt { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .vs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 16px; }
+  .vcol { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .vcol h3 { margin-bottom: 8px; }
+  .vcol ul { margin-left: 18px; color: var(--muted); font-size: .93rem; }
+  footer { margin-top: 56px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: .88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🤖 Learn ArgoCD the school way — with &amp; without GitOps</h1>
+    <p class="sub">The sister course to
+    <a href="https://baluraut.github.io/learn-kubernetes-school/">Learn Kubernetes School</a>:
+    that one teaches <b>what runs your app</b> — this one teaches <b>what deploys it and keeps it
+    honest</b>. You deploy the same demo app three ways — by hand, with a CI/CD push pipeline,
+    and with ArgoCD — and feel exactly why each step up exists.</p>
+    <div class="chips">
+      <span class="chip">🎒 by hand</span><span class="chip">📮 CI/CD push</span>
+      <span class="chip">📖 GitOps</span><span class="chip">🤖 ArgoCD pull</span>
+      <span class="chip">🪑↩️ self-heal</span><span class="chip">⏪ git-revert rollbacks</span>
+    </div>
+  </header>
+
+  <div class="vs">
+    <div class="vcol" style="border-top: 5px solid #dc2626">
+      <h3>🚪 Part 1 — WITHOUT ArgoCD</h3>
+      <ul>
+        <li>deploy by hand — and forget what you deployed</li>
+        <li>meet <b>configuration drift</b>, the silent killer</li>
+        <li>automate with a push pipeline (courier robot 📮)</li>
+        <li>…and discover what push still can't fix</li>
+      </ul>
+    </div>
+    <div class="vcol" style="border-top: 5px solid #16a34a">
+      <h3>📖 Part 2 — WITH ArgoCD</h3>
+      <ul>
+        <li>git becomes the single source of truth</li>
+        <li>the caretaker robot 🤖 lives inside the cluster</li>
+        <li>drift gets reverted; deploys = commits</li>
+        <li>rollback = <code>git revert</code> · audit = <code>git log</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>🎓 The 12 lessons</h2>
+  <p class="sub">One git branch = one idea; branch 07 contains lessons 01–07. Click a card to read
+  the lesson on GitHub, or see all 12 as
+  <a href="lesson-diagrams.html"><b>numbered box-and-arrow diagrams on one page</b></a>.</p>
+
+  <div class="grid">
+    <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">1</span><h3>🎒 Deploy by hand</h3></div><span class="ana">Carrying homework to school yourself — fine once, awful daily.</span><code>lesson-01-deploy-by-hand</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l01">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">2</span><h3>🪑 The drift problem</h3></div><span class="ana">No master seating chart — nobody knows how the room should look.</span><code>lesson-02-drift-problem</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-02-drift-problem/lessons/02-drift-problem/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l02">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">3</span><h3>📮 CI/CD push pipeline</h3></div><span class="ana">The courier robot — tests, builds, delivers with a master key.</span><code>lesson-03-cicd-push</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-03-cicd-push/lessons/03-cicd-push/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l03">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">4</span><h3>🚪 Limits of push</h3></div><span class="ana">The courier delivers… and leaves. Nobody watches the room after.</span><code>lesson-04-limits-of-push</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-04-limits-of-push/lessons/04-limits-of-push/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l04">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">5</span><h3>📖 The GitOps idea</h3></div><span class="ana">The master plan book — reality must match the book, always.</span><code>lesson-05-gitops-idea</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-05-gitops-idea/lessons/05-gitops-idea/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l05">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">6</span><h3>🤖 Install ArgoCD</h3></div><span class="ana">Hiring the caretaker robot — it moves into the school itself.</span><code>lesson-06-install-argocd</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-06-install-argocd/lessons/06-install-argocd/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l06">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">7</span><h3>📄 First Application</h3></div><span class="ana">One page of the plan book: which repo, which folder, which room.</span><code>lesson-07-first-application</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-07-first-application/lessons/07-first-application/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l07">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">8</span><h3>📏 Sync policies</h3></div><span class="ana">House rules for the robot — ask first, or act on its own?</span><code>lesson-08-sync-policies</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l08">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">9</span><h3>🪑↩️ Self-heal &amp; drift</h3></div><span class="ana">A kid moves the chairs; the robot puts them back. Live demo.</span><code>lesson-09-self-heal-drift</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-09-self-heal-drift/lessons/09-self-heal-drift/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l09">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">10</span><h3>⏪ Rollback &amp; history</h3></div><span class="ana">Flip the book to yesterday's page — git revert IS the rollback.</span><code>lesson-10-rollback-history</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l10">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">11</span><h3>📚 Helm, Kustomize &amp; envs</h3></div><span class="ana">Fill-in-the-blank recipe books — one recipe, many classrooms.</span><code>lesson-11-helm-kustomize-envs</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-11-helm-kustomize-envs/lessons/11-helm-kustomize-envs/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l11">See the diagram ↗</a></div>
+    <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">12</span><h3>🔑 Secrets + the scorecard</h3></div><span class="ana">Never glue the locker key into the book — and the final verdict.</span><code>lesson-12-secrets-and-compare</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-12-secrets-and-compare/lessons/12-secrets-and-compare/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l12">See the diagram ↗</a></div>
+  </div>
+
+  <pre><code># take the course locally (any local cluster — Docker Desktop, minikube, kind):
+git clone https://github.com/BaluRaut/learn-argocd-school.git
+cd learn-argocd-school
+git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/README.md</code></pre>
+
+  <div class="callout">🎒 <b>New here?</b> This course assumes the basics from
+    <a href="https://baluraut.github.io/learn-kubernetes-school/">Learn Kubernetes School</a>
+    (pods, deployments, services, rollouts — lessons 01–11 there). Do that first, then come back.</div>
+
+  <a class="btn" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">Start Lesson 01 →</a>
+  <a class="btn alt" href="lesson-diagrams.html">📐 All 12 lesson diagrams</a>
+  <a class="btn alt" href="https://baluraut.github.io/learn-kubernetes-school/">☸️ The Kubernetes course</a>
+
+  <footer>
+    Learn ArgoCD School · with &amp; without GitOps ·
+    <a href="https://github.com/BaluRaut/learn-argocd-school">github.com/BaluRaut/learn-argocd-school</a> ·
+    sister course: <a href="https://baluraut.github.io/learn-kubernetes-school/">learn-kubernetes-school</a>
+  </footer>
+
+</div>
+</body>
+</html>
