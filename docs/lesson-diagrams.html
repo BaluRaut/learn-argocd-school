@@ -429,15 +429,16 @@
     <text class="s m" x="165" y="270">🗝️ External Secrets: git holds only a</text>
     <text class="s m" x="165" y="290">POINTER to a vault / AWS SM</text>
     <g transform="translate(310,275)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
-    <rect class="box" x="420" y="50" width="490" height="255 " rx="14"/>
+    <rect class="box" x="420" y="50" width="490" height="255" rx="14"/>
     <text class="t m" x="665" y="80">🏁 the scorecard</text>
-    <text class="s" x="450" y="112">                         📮 push (CI/CD)      🤖 pull (ArgoCD)</text>
-    <text class="s" x="450" y="140">drift watched?        ❌ between deploys     ✅ every ~3 min</text>
-    <text class="s" x="450" y="164">cluster keys           ❌ outside, in CI       ✅ stay inside</text>
-    <text class="s" x="450" y="188">deploy log              ⚠️ CI history            ✅ git log itself</text>
-    <text class="s" x="450" y="212">rollback                  ⚠️ re-run pipeline     ✅ git revert</text>
-    <text class="s" x="450" y="236">many clusters         ❌ keys × N               ✅ agent per cluster</text>
-    <text class="s" x="450" y="260">CI still needed?      —  yes: tests+builds  ✅ CI builds, Argo deploys</text>
+    <text class="s m" x="700" y="112" style="font-weight:700">📮 push</text>
+    <text class="s m" x="840" y="112" style="font-weight:700">🤖 pull</text>
+    <text class="s" x="440" y="140">drift watched?</text><text class="s m" x="700" y="140">❌ between deploys</text><text class="s m" x="840" y="140">✅ every ~3 min</text>
+    <text class="s" x="440" y="164">cluster keys</text><text class="s m" x="700" y="164">❌ outside, in CI</text><text class="s m" x="840" y="164">✅ stay inside</text>
+    <text class="s" x="440" y="188">deploy log</text><text class="s m" x="700" y="188">⚠️ CI history</text><text class="s m" x="840" y="188">✅ git log itself</text>
+    <text class="s" x="440" y="212">rollback</text><text class="s m" x="700" y="212">⚠️ re-run pipeline</text><text class="s m" x="840" y="212">✅ git revert</text>
+    <text class="s" x="440" y="236">many clusters</text><text class="s m" x="700" y="236">❌ keys × N</text><text class="s m" x="840" y="236">✅ one agent each</text>
+    <text class="s" x="440" y="260">CI still needed?</text><text class="s m" x="700" y="260">yes: tests + builds</text><text class="s m" x="840" y="260">✅ Argo deploys</text>
     <g transform="translate(665,285)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
     <text class="s m" x="665" y="309">real teams use BOTH: the courier builds, the caretaker deploys</text>
   </svg>

@@ -42,8 +42,31 @@
   .vcol ul { margin-left: 18px; color: var(--muted); font-size: .93rem; }
   footer { margin-top: 56px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: .88rem; }
 </style>
+<style>
+  .dsec { background: var(--card); border: 1px solid var(--line); border-top: 6px solid var(--c, var(--accent)); border-radius: 16px; padding: 22px 22px 16px; margin-top: 26px; scroll-margin-top: 16px; }
+  .dsec h2 { font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+  .dsec h2 .ln { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--c, var(--accent)); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; font-weight: 800; }
+  .dsec p.d { color: var(--muted); font-size: .95rem; margin: 6px 0 4px; }
+  .dsec svg { width: 100%; height: auto; display: block; margin-top: 10px; }
+  .dsec .foot { margin-top: 8px; font-size: .92rem; }
+  .box  { fill: var(--card); stroke: var(--c, var(--accent)); stroke-width: 2; }
+  .soft { fill: var(--bg);  stroke: var(--line); stroke-width: 1.5; }
+  .dead { fill: var(--bg);  stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 6 5; }
+  .t  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: var(--ink); }
+  .s  { font: 12px -apple-system, "Segoe UI", sans-serif; fill: var(--muted); }
+  .m  { text-anchor: middle; }
+  .arr  { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arw); }
+  .dash { stroke-dasharray: 6 5; }
+  .nc { fill: var(--c, var(--accent)); }
+  .nt { font: 700 12px -apple-system, sans-serif; fill: #fff; text-anchor: middle; }
+</style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+  </marker>
+</defs></svg>
 <div class="wrap">
 
   <header>
@@ -81,16 +104,22 @@
     </div>
   </div>
 
-  <h2>🎓 The 12 lessons</h2>
-  <p class="sub">One git branch = one idea; branch 07 contains lessons 01–07. Click a card to read
-  the lesson on GitHub, or see all 12 as
-  <a href="lesson-diagrams.html"><b>numbered box-and-arrow diagrams on one page</b></a>.</p>
+  <h2 id="part1">🚪 Part 1 — WITHOUT ArgoCD (lessons 1–4)</h2>
+  <p class="sub">Feel the pain first: hand deploys, invisible drift, then a courier robot (CI/CD push) —
+  and the four gaps it can never close. One git branch = one idea; branch 07 contains lessons 01–07.</p>
 
   <div class="grid">
     <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">1</span><h3>🎒 Deploy by hand</h3></div><span class="ana">Carrying homework to school yourself — fine once, awful daily.</span><code>lesson-01-deploy-by-hand</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l01">See the diagram ↗</a></div>
     <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">2</span><h3>🪑 The drift problem</h3></div><span class="ana">No master seating chart — nobody knows how the room should look.</span><code>lesson-02-drift-problem</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-02-drift-problem/lessons/02-drift-problem/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l02">See the diagram ↗</a></div>
     <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">3</span><h3>📮 CI/CD push pipeline</h3></div><span class="ana">The courier robot — tests, builds, delivers with a master key.</span><code>lesson-03-cicd-push</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-03-cicd-push/lessons/03-cicd-push/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l03">See the diagram ↗</a></div>
     <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">4</span><h3>🚪 Limits of push</h3></div><span class="ana">The courier delivers… and leaves. Nobody watches the room after.</span><code>lesson-04-limits-of-push</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-04-limits-of-push/lessons/04-limits-of-push/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l04">See the diagram ↗</a></div>
+    </div>
+
+  <h2 id="part2">📖 Part 2 — WITH ArgoCD (lessons 5–12)</h2>
+  <p class="sub">The cure: git becomes the master plan book, and ArgoCD — the caretaker robot living
+  INSIDE the cluster — keeps reality matching it, forever.</p>
+
+  <div class="grid">
     <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">5</span><h3>📖 The GitOps idea</h3></div><span class="ana">The master plan book — reality must match the book, always.</span><code>lesson-05-gitops-idea</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-05-gitops-idea/lessons/05-gitops-idea/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l05">See the diagram ↗</a></div>
     <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">6</span><h3>🤖 Install ArgoCD</h3></div><span class="ana">Hiring the caretaker robot — it moves into the school itself.</span><code>lesson-06-install-argocd</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-06-install-argocd/lessons/06-install-argocd/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l06">See the diagram ↗</a></div>
     <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">7</span><h3>📄 First Application</h3></div><span class="ana">One page of the plan book: which repo, which folder, which room.</span><code>lesson-07-first-application</code><a class="go" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-07-first-application/lessons/07-first-application/README.md">Read lesson →</a><a class="go" href="lesson-diagrams.html#l07">See the diagram ↗</a></div>
@@ -109,6 +138,395 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
   <div class="callout">🎒 <b>New here?</b> This course assumes the basics from
     <a href="https://baluraut.github.io/learn-kubernetes-school/">Learn Kubernetes School</a>
     (pods, deployments, services, rollouts — lessons 01–11 there). Do that first, then come back.</div>
+
+
+  <h2 id="diagrams">📐 The lesson diagrams — follow the numbers</h2>
+  <p class="sub">Every lesson as one numbered box-and-arrow diagram, one after another —
+  readable right here (red = without ArgoCD, green = with). Also on a
+  <a href="lesson-diagrams.html">standalone page</a> with jump navigation.</p>
+
+<!-- 01 -->
+<section class="dsec" id="l01" style="--c:#dc2626">
+  <h2><span class="ln">1</span> 🎒 Deploy by hand — you ARE the deploy system</h2>
+  <p class="d">kubectl apply from your laptop works… and quietly makes you the single point of failure.</p>
+  <svg viewBox="0 0 940 280" role="img" aria-label="You apply YAML from your laptop to the cluster; a week later nobody knows what is deployed">
+    <rect class="box" x="40" y="90" width="230" height="100" rx="12"/>
+    <text class="t m" x="155" y="125">🧑‍💻 Your laptop</text>
+    <text class="s m" x="155" y="147">YAML files + kubeconfig 🔑</text>
+    <rect class="box" x="430" y="90" width="230" height="100" rx="12"/>
+    <text class="t m" x="545" y="125">🏫 Cluster</text>
+    <text class="s m" x="545" y="147">🪑🪑 hello-school pods</text>
+    <line class="arr" x1="270" y1="140" x2="426" y2="140"/>
+    <g transform="translate(348,123)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="348" y="168">kubectl apply -f k8s/</text>
+    <g transform="translate(545,80)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="545" y="62">works! 🎉 …today</text>
+    <rect class="dead" x="720" y="60" width="190" height="160" rx="12"/>
+    <text class="t m" x="815" y="95">📅 one week later</text>
+    <text class="s m" x="815" y="122">❓ which version is live?</text>
+    <text class="s m" x="815" y="144">❓ who changed it?</text>
+    <text class="s m" x="815" y="166">❓ teammate deploys too?</text>
+    <text class="s m" x="815" y="188">😱 only your memory knows</text>
+    <g transform="translate(700,140)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">Read full lesson 01 →</a></p>
+</section>
+
+<!-- 02 -->
+<section class="dsec" id="l02" style="--c:#dc2626">
+  <h2><span class="ln">2</span> 🪑 Drift — when reality stops matching the files</h2>
+  <p class="d">Every hand-edit that never lands back in git widens a silent, dangerous gap.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="The YAML in git says one thing, the cluster runs another; hotfixes widen the gap">
+    <rect class="box" x="40" y="70" width="280" height="140" rx="12"/>
+    <text class="t m" x="180" y="102">📄 YAML in git says</text>
+    <text class="s m" x="180" y="130">replicas: 2</text>
+    <text class="s m" x="180" y="152">image: v1</text>
+    <text class="s m" x="180" y="174">memory limit: 64Mi</text>
+    <rect class="box" x="620" y="70" width="280" height="140" rx="12"/>
+    <text class="t m" x="760" y="102">🏫 Cluster actually runs</text>
+    <text class="s m" x="760" y="130">replicas: 5 (Friday panic)</text>
+    <text class="s m" x="760" y="152">image: v2-hotfix-final-REAL</text>
+    <text class="s m" x="760" y="174">limit: 512Mi (kubectl edit)</text>
+    <text class="t m" x="470" y="148" style="font-size:30px">≠</text>
+    <line class="arr dash" x1="320" y1="110" x2="616" y2="110"/>
+    <g transform="translate(470,93)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="470" y="75">hotfix by hand, "just this once"</text>
+    <line class="arr dash" x1="616" y1="185" x2="320" y2="185"/>
+    <g transform="translate(470,202)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="470" y="228">…and nobody writes it back to git</text>
+    <g transform="translate(470,262)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="470" y="288">the gap = DRIFT: next "clean" deploy from git silently undoes the hotfix 💥</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-02-drift-problem/lessons/02-drift-problem/README.md">Read full lesson 02 →</a></p>
+</section>
+
+<!-- 03 -->
+<section class="dsec" id="l03" style="--c:#dc2626">
+  <h2><span class="ln">3</span> 📮 CI/CD push — the courier robot deploys for you</h2>
+  <p class="d">Every push is tested, built and delivered — the human is out of the loop (mostly).</p>
+  <svg viewBox="0 0 940 280" role="img" aria-label="Dev pushes, CI tests and builds and pushes an image, then deploys to the cluster using stored credentials">
+    <rect class="box" x="30" y="90" width="150" height="90" rx="12"/>
+    <text class="t m" x="105" y="127">🧑‍💻 dev</text>
+    <text class="s m" x="105" y="149">git push</text>
+    <rect class="box" x="250" y="60" width="360" height="150" rx="14"/>
+    <text class="t m" x="430" y="90">📮 CI/CD — the courier robot</text>
+    <rect class="soft" x="270" y="105" width="100" height="50" rx="8"/><text class="s m" x="320" y="135">✅ test</text>
+    <rect class="soft" x="380" y="105" width="100" height="50" rx="8"/><text class="s m" x="430" y="135">🍱 build</text>
+    <rect class="soft" x="490" y="105" width="100" height="50" rx="8"/><text class="s m" x="540" y="135">🗄️ registry</text>
+    <text class="s m" x="430" y="185">holds the cluster's master key 🔑</text>
+    <rect class="box" x="700" y="90" width="210" height="90" rx="12"/>
+    <text class="t m" x="805" y="122">🏫 Cluster</text>
+    <text class="s m" x="805" y="144">kubectl apply, from outside</text>
+    <line class="arr" x1="180" y1="135" x2="246" y2="135"/>
+    <g transform="translate(213,118)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <line class="arr" x1="370" y1="130" x2="376" y2="130"/>
+    <line class="arr" x1="480" y1="130" x2="486" y2="130"/>
+    <g transform="translate(430,240)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="430" y="266">same steps every time — no "oops, forgot the tests"</text>
+    <line class="arr" x1="610" y1="135" x2="696" y2="135"/>
+    <g transform="translate(653,118)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="653" y="165">PUSH deploy</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-03-cicd-push/lessons/03-cicd-push/README.md">Read full lesson 03 →</a></p>
+</section>
+
+<!-- 04 -->
+<section class="dsec" id="l04" style="--c:#dc2626">
+  <h2><span class="ln">4</span> 🚪 Limits of push — the courier delivers and LEAVES</h2>
+  <p class="d">A push pipeline deploys moments; nobody guards the state in between.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="After the pipeline finishes, drift returns, credentials live outside, and many clusters need many keys">
+    <rect class="box" x="40" y="100" width="220" height="100" rx="12"/>
+    <text class="t m" x="150" y="135">📮 pipeline run</text>
+    <text class="s m" x="150" y="157">deploys at 14:03… then exits</text>
+    <rect class="box" x="380" y="100" width="220" height="100" rx="12"/>
+    <text class="t m" x="490" y="135">🏫 Cluster at 14:04+</text>
+    <text class="s m" x="490" y="157">unguarded until next push</text>
+    <line class="arr" x1="260" y1="150" x2="376" y2="150"/>
+    <g transform="translate(318,133)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <rect class="dead" x="700" y="40" width="210" height="70" rx="12"/>
+    <text class="s m" x="805" y="68">🪑 drift creeps back in —</text>
+    <text class="s m" x="805" y="90">who would even notice?</text>
+    <g transform="translate(680,75)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <rect class="dead" x="700" y="125" width="210" height="70" rx="12"/>
+    <text class="s m" x="805" y="153">🔑 cluster keys live OUTSIDE,</text>
+    <text class="s m" x="805" y="175">in the CI system</text>
+    <g transform="translate(680,160)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <rect class="dead" x="700" y="210" width="210" height="70" rx="12"/>
+    <text class="s m" x="805" y="238">🏫🏫🏫 10 clusters =</text>
+    <text class="s m" x="805" y="260">10 keys + 10 pipeline configs</text>
+    <g transform="translate(680,245)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+    <line class="arr dash" x1="600" y1="130" x2="696" y2="80"/>
+    <line class="arr dash" x1="600" y1="150" x2="696" y2="158"/>
+    <line class="arr dash" x1="600" y1="175" x2="696" y2="240"/>
+    <text class="s m" x="320" y="260">the fix isn't a better courier — it's a guard who LIVES in the school → Part 2</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-04-limits-of-push/lessons/04-limits-of-push/README.md">Read full lesson 04 →</a></p>
+</section>
+
+<!-- 05 -->
+<section class="dsec" id="l05" style="--c:#16a34a">
+  <h2><span class="ln">5</span> 📖 The GitOps idea — reality must match the book</h2>
+  <p class="d">Declare the desired state in git; an agent inside the cluster converges reality toward it, forever.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="Git holds desired state; an in-cluster agent compares and converges actual state in an endless loop">
+    <rect class="box" x="60" y="90" width="260" height="120" rx="12"/>
+    <text class="t m" x="190" y="125">📖 git repo</text>
+    <text class="s m" x="190" y="150">DESIRED state — the book</text>
+    <text class="s m" x="190" y="172">k8s/ manifests, reviewed PRs</text>
+    <rect class="box" x="620" y="90" width="260" height="120" rx="12"/>
+    <text class="t m" x="750" y="125">🏫 cluster</text>
+    <text class="s m" x="750" y="150">ACTUAL state — the rooms</text>
+    <text class="s m" x="750" y="172">pods, services, configs</text>
+    <rect class="soft" x="400" y="110" width="160" height="80" rx="40"/>
+    <text class="t m" x="480" y="143">🔄 agent</text>
+    <text class="s m" x="480" y="165">compare → converge</text>
+    <line class="arr" x1="320" y1="125" x2="396" y2="135"/>
+    <g transform="translate(358,113)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="352" y="95">reads the book</text>
+    <line class="arr" x1="620" y1="125" x2="564" y2="135"/>
+    <g transform="translate(592,113)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="598" y="95">looks at the rooms</text>
+    <line class="arr" x1="560" y1="175" x2="616" y2="185"/>
+    <g transform="translate(588,197)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="588" y="225">fixes any difference</text>
+    <g transform="translate(480,250)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+    <text class="s m" x="480" y="278">repeat every ~3 minutes, forever — same reconcile loop as lesson 03 of the k8s course, one level up</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-05-gitops-idea/lessons/05-gitops-idea/README.md">Read full lesson 05 →</a></p>
+</section>
+
+<!-- 06 -->
+<section class="dsec" id="l06" style="--c:#16a34a">
+  <h2><span class="ln">6</span> 🤖 Install ArgoCD — the robot moves into the school</h2>
+  <p class="d">One kubectl apply installs the whole robot; the UI is your window into its head.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="Installing ArgoCD creates its components inside an argocd namespace; you open the UI via port-forward">
+    <rect class="box" x="40" y="100" width="190" height="90" rx="12"/>
+    <text class="t m" x="135" y="135">🧑‍💻 you</text>
+    <text class="s m" x="135" y="157">one kubectl apply</text>
+    <rect class="box" x="330" y="40" width="580" height="230" rx="14"/>
+    <text class="t m" x="620" y="70">🏫 your cluster</text>
+    <rect class="soft" x="360" y="90" width="520" height="150" rx="12"/>
+    <text class="t m" x="620" y="115">🚪 namespace: argocd — the robot's room</text>
+    <rect class="soft" x="385" y="135" width="150" height="80" rx="10"/>
+    <text class="s m" x="460" y="165">🖥️ api-server</text>
+    <text class="s m" x="460" y="187">+ the web UI</text>
+    <rect class="soft" x="550" y="135" width="150" height="80" rx="10"/>
+    <text class="s m" x="625" y="165">📖 repo-server</text>
+    <text class="s m" x="625" y="187">clones git repos</text>
+    <rect class="soft" x="715" y="135" width="150" height="80" rx="10"/>
+    <text class="s m" x="790" y="165">🔄 app-controller</text>
+    <text class="s m" x="790" y="187">the reconcile loop</text>
+    <line class="arr" x1="230" y1="145" x2="326" y2="145"/>
+    <g transform="translate(278,128)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="278" y="175">install manifest</text>
+    <g transform="translate(620,255)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="620" y="283">port-forward the UI → https://localhost:8080 · login admin + initial secret · 3: the robot waits for its first plan page</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-06-install-argocd/lessons/06-install-argocd/README.md">Read full lesson 06 →</a></p>
+</section>
+
+<!-- 07 -->
+<section class="dsec" id="l07" style="--c:#16a34a">
+  <h2><span class="ln">7</span> 📄 The first Application — one page of the plan book</h2>
+  <p class="d">An Application says: THIS repo, THIS folder, THIS destination. The robot does the rest.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="The Application resource points ArgoCD at a repo folder and a destination namespace; ArgoCD clones and creates the resources">
+    <rect class="box" x="40" y="70" width="250" height="160" rx="12"/>
+    <text class="t m" x="165" y="100">📄 Application</text>
+    <text class="s m" x="165" y="128">repoURL: learn-argocd-school</text>
+    <text class="s m" x="165" y="150">path: k8s/</text>
+    <text class="s m" x="165" y="172">destination: gitops-school</text>
+    <text class="s m" x="165" y="194">syncPolicy: automated</text>
+    <rect class="box" x="390" y="90" width="200" height="110" rx="12"/>
+    <text class="t m" x="490" y="125">🤖 ArgoCD</text>
+    <text class="s m" x="490" y="147">clones the repo,</text>
+    <text class="s m" x="490" y="169">renders the manifests</text>
+    <rect class="box" x="680" y="60" width="230" height="90" rx="12"/>
+    <text class="t m" x="795" y="90">📖 git: k8s/ folder</text>
+    <text class="s m" x="795" y="112">deployment + service + ns</text>
+    <rect class="box" x="680" y="180" width="230" height="90" rx="12"/>
+    <text class="t m" x="795" y="210">🚪 gitops-school</text>
+    <text class="s m" x="795" y="232">🪑🪑 hello-school pods live!</text>
+    <line class="arr" x1="290" y1="145" x2="386" y2="145"/>
+    <g transform="translate(338,128)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="338" y="172">kubectl apply -f argocd/</text>
+    <line class="arr" x1="590" y1="115" x2="676" y2="100"/>
+    <g transform="translate(633,90)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <line class="arr" x1="590" y1="175" x2="676" y2="215"/>
+    <g transform="translate(633,212)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="633" y="245">creates everything</text>
+    <text class="s m" x="475" y="280">from now on you never kubectl-apply the app again — you edit the repo instead</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-07-first-application/lessons/07-first-application/README.md">Read full lesson 07 →</a></p>
+</section>
+
+<!-- 08 -->
+<section class="dsec" id="l08" style="--c:#16a34a">
+  <h2><span class="ln">8</span> 📏 Sync policies — how strictly the robot follows the book</h2>
+  <p class="d">Manual = it asks first. Automated = it acts. Prune and selfHeal turn the strictness up.</p>
+  <svg viewBox="0 0 940 320" role="img" aria-label="A change in git makes the app OutOfSync; manual policy waits for a click, automated syncs immediately; prune deletes removed resources and selfHeal reverts drift">
+    <rect class="box" x="40" y="110" width="220" height="90" rx="12"/>
+    <text class="t m" x="150" y="145">📖 change lands in git</text>
+    <text class="s m" x="150" y="167">app becomes OutOfSync 🟡</text>
+    <rect class="box" x="380" y="40" width="240" height="90" rx="12"/>
+    <text class="t m" x="500" y="70">✋ manual sync</text>
+    <text class="s m" x="500" y="92">robot ASKS — you click Sync</text>
+    <rect class="box" x="380" y="190" width="240" height="90" rx="12"/>
+    <text class="t m" x="500" y="220">⚡ automated sync</text>
+    <text class="s m" x="500" y="242">robot ACTS on its own</text>
+    <line class="arr" x1="260" y1="135" x2="376" y2="90"/>
+    <g transform="translate(318,95)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <line class="arr" x1="260" y1="175" x2="376" y2="225"/>
+    <g transform="translate(318,220)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <rect class="soft" x="700" y="60" width="210" height="80" rx="12"/>
+    <text class="t m" x="805" y="90">🗑️ prune: true</text>
+    <text class="s m" x="805" y="112">deleted in git → deleted live</text>
+    <rect class="soft" x="700" y="180" width="210" height="80" rx="12"/>
+    <text class="t m" x="805" y="210">↩️ selfHeal: true</text>
+    <text class="s m" x="805" y="232">hand-edits get reverted</text>
+    <g transform="translate(680,100)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <g transform="translate(680,220)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+    <text class="s m" x="475" y="305">start manual while learning → automated + prune + selfHeal in production (the strict-but-fair caretaker)</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md">Read full lesson 08 →</a></p>
+</section>
+
+<!-- 09 -->
+<section class="dsec" id="l09" style="--c:#16a34a">
+  <h2><span class="ln">9</span> 🪑↩️ Self-heal — the chairs go back where the book says</h2>
+  <p class="d">Hand-made drift survives seconds, not months. Change the book, not the room.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="A manual scale to five pods is detected as drift and reverted to the two replicas the book declares">
+    <rect class="box" x="40" y="100" width="220" height="100" rx="12"/>
+    <text class="t m" x="150" y="135">😈 you, by hand</text>
+    <text class="s m" x="150" y="157">kubectl scale --replicas=5</text>
+    <rect class="box" x="360" y="100" width="220" height="100" rx="12"/>
+    <text class="t m" x="470" y="130">🏫 cluster: 5 pods</text>
+    <text class="s m" x="470" y="152">but the book 📖 says 2!</text>
+    <text class="s m" x="470" y="174">status: OutOfSync + drift</text>
+    <rect class="box" x="680" y="100" width="230" height="100" rx="12"/>
+    <text class="t m" x="795" y="130">🤖 ArgoCD self-heal</text>
+    <text class="s m" x="795" y="152">re-applies the book →</text>
+    <text class="s m" x="795" y="174">back to 2 pods ✅</text>
+    <line class="arr" x1="260" y1="150" x2="356" y2="150"/>
+    <g transform="translate(308,133)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <line class="arr" x1="580" y1="150" x2="676" y2="150"/>
+    <g transform="translate(628,133)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="628" y="180">noticed in seconds</text>
+    <line class="arr dash" x1="795" y1="200" x2="480" y2="240"/>
+    <g transform="translate(640,232)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="628" y="268">the book wins — every time</text>
+    <g transform="translate(150,240)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+    <text class="s m" x="255" y="245">want 5 replicas for real? edit the BOOK: change git, PR, merge → robot scales up happily</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-09-self-heal-drift/lessons/09-self-heal-drift/README.md">Read full lesson 09 →</a></p>
+</section>
+
+<!-- 10 -->
+<section class="dsec" id="l10" style="--c:#16a34a">
+  <h2><span class="ln">10</span> ⏪ Rollback — flip the book to yesterday's page</h2>
+  <p class="d">In GitOps, git history IS deploy history — so undoing a commit undoes the deploy.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="A bad commit deploys a bad version; git revert creates a new commit restoring the old state which ArgoCD syncs">
+    <rect class="soft" x="60" y="60" width="160" height="70" rx="10"/>
+    <text class="s m" x="140" y="90">commit A</text>
+    <text class="s m" x="140" y="110">image: v1 ✅</text>
+    <rect class="soft" x="280" y="60" width="160" height="70" rx="10"/>
+    <text class="s m" x="360" y="90">commit B</text>
+    <text class="s m" x="360" y="110">image: v2 💥 bad!</text>
+    <rect class="box" x="500" y="60" width="180" height="70" rx="10"/>
+    <text class="s m" x="590" y="85">commit C = revert B</text>
+    <text class="s m" x="590" y="107">image: v1 again ✅</text>
+    <line class="arr" x1="220" y1="95" x2="276" y2="95"/>
+    <line class="arr" x1="440" y1="95" x2="496" y2="95"/>
+    <g transform="translate(360,45)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <text class="s m" x="248" y="40">bad version ships (via git, at least!)</text>
+    <g transform="translate(590,45)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="700" y="40">git revert — 10 seconds</text>
+    <rect class="box" x="380" y="190" width="220" height="80" rx="12"/>
+    <text class="t m" x="490" y="220">🤖 ArgoCD syncs C</text>
+    <text class="s m" x="490" y="242">cluster back on v1</text>
+    <line class="arr" x1="590" y1="130" x2="520" y2="186"/>
+    <g transform="translate(560,160)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <rect class="dead" x="680" y="190" width="230" height="80" rx="12"/>
+    <text class="s m" x="795" y="218">🧾 git log = deploy log:</text>
+    <text class="s m" x="795" y="240">who, what, when — audit free</text>
+    <g transform="translate(660,230)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md">Read full lesson 10 →</a></p>
+</section>
+
+<!-- 11 -->
+<section class="dsec" id="l11" style="--c:#16a34a">
+  <h2><span class="ln">11</span> 📚 Helm, Kustomize &amp; environments — one recipe, many classrooms</h2>
+  <p class="d">Templates + per-environment values; one Application per room, and a master page listing them all.</p>
+  <svg viewBox="0 0 940 320" role="img" aria-label="One chart or base plus per-environment values produce applications for dev, staging and prod; an app-of-apps lists them">
+    <rect class="box" x="40" y="100" width="220" height="110" rx="12"/>
+    <text class="t m" x="150" y="130">📚 one recipe</text>
+    <text class="s m" x="150" y="152">Helm chart / Kustomize base</text>
+    <text class="s m" x="150" y="174">replicas: ___  image: ___</text>
+    <rect class="soft" x="340" y="40" width="180" height="70" rx="10"/>
+    <text class="s m" x="430" y="65">📝 values-dev.yaml</text>
+    <text class="s m" x="430" y="87">replicas: 1</text>
+    <rect class="soft" x="340" y="125" width="180" height="70" rx="10"/>
+    <text class="s m" x="430" y="150">📝 values-staging.yaml</text>
+    <text class="s m" x="430" y="172">replicas: 2</text>
+    <rect class="soft" x="340" y="210" width="180" height="70" rx="10"/>
+    <text class="s m" x="430" y="235">📝 values-prod.yaml</text>
+    <text class="s m" x="430" y="257">replicas: 5 + HPA</text>
+    <line class="arr" x1="260" y1="140" x2="336" y2="75"/>
+    <line class="arr" x1="260" y1="155" x2="336" y2="160"/>
+    <line class="arr" x1="260" y1="170" x2="336" y2="245"/>
+    <g transform="translate(298,120)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <rect class="box" x="600" y="40" width="150" height="70" rx="10"/><text class="s m" x="675" y="70">🚪 dev room</text>
+    <rect class="box" x="600" y="125" width="150" height="70" rx="10"/><text class="s m" x="675" y="155">🚪 staging room</text>
+    <rect class="box" x="600" y="210" width="150" height="70" rx="10"/><text class="s m" x="675" y="240">🚪 prod room</text>
+    <line class="arr" x1="520" y1="75" x2="596" y2="75"/>
+    <line class="arr" x1="520" y1="160" x2="596" y2="160"/>
+    <line class="arr" x1="520" y1="245" x2="596" y2="245"/>
+    <g transform="translate(558,143)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <text class="s m" x="558" y="120">one Application each</text>
+    <rect class="box" x="790" y="115" width="120" height="90" rx="12"/>
+    <text class="t m" x="850" y="147">📖 app of</text>
+    <text class="t m" x="850" y="167">apps</text>
+    <line class="arr dash" x1="790" y1="140" x2="754" y2="80"/>
+    <line class="arr dash" x1="790" y1="160" x2="754" y2="160"/>
+    <line class="arr dash" x1="790" y1="180" x2="754" y2="240"/>
+    <g transform="translate(850,220)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <text class="s m" x="850" y="248">one page lists</text>
+    <text class="s m" x="850" y="266">all the pages</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-11-helm-kustomize-envs/lessons/11-helm-kustomize-envs/README.md">Read full lesson 11 →</a></p>
+</section>
+
+<!-- 12 -->
+<section class="dsec" id="l12" style="--c:#16a34a">
+  <h2><span class="ln">12</span> 🔑 Secrets in GitOps + the final scorecard</h2>
+  <p class="d">Everything lives in git… except plaintext secrets. Encrypt them in, or reference them out.</p>
+  <svg viewBox="0 0 940 320" role="img" aria-label="Plaintext secrets must never go to git; sealed secrets are encrypted into git and decrypted in-cluster; external secrets reference a vault; plus a push versus pull scorecard">
+    <rect class="dead" x="40" y="50" width="250" height="80" rx="12"/>
+    <text class="t m" x="165" y="80">❌ password in the book</text>
+    <text class="s m" x="165" y="102">plaintext secret in git = leaked</text>
+    <g transform="translate(165,145)"><circle r="11" class="nc"/><text class="nt" dy="4">1</text></g>
+    <rect class="box" x="40" y="170" width="250" height="60" rx="12"/>
+    <text class="s m" x="165" y="195">🔐 Sealed Secrets: encrypted IN git,</text>
+    <text class="s m" x="165" y="215">only the cluster can decrypt</text>
+    <g transform="translate(310,200)"><circle r="11" class="nc"/><text class="nt" dy="4">2</text></g>
+    <rect class="box" x="40" y="245" width="250" height="60" rx="12"/>
+    <text class="s m" x="165" y="270">🗝️ External Secrets: git holds only a</text>
+    <text class="s m" x="165" y="290">POINTER to a vault / AWS SM</text>
+    <g transform="translate(310,275)"><circle r="11" class="nc"/><text class="nt" dy="4">3</text></g>
+    <rect class="box" x="420" y="50" width="490" height="255" rx="14"/>
+    <text class="t m" x="665" y="80">🏁 the scorecard</text>
+    <text class="s m" x="700" y="112" style="font-weight:700">📮 push</text>
+    <text class="s m" x="840" y="112" style="font-weight:700">🤖 pull</text>
+    <text class="s" x="440" y="140">drift watched?</text><text class="s m" x="700" y="140">❌ between deploys</text><text class="s m" x="840" y="140">✅ every ~3 min</text>
+    <text class="s" x="440" y="164">cluster keys</text><text class="s m" x="700" y="164">❌ outside, in CI</text><text class="s m" x="840" y="164">✅ stay inside</text>
+    <text class="s" x="440" y="188">deploy log</text><text class="s m" x="700" y="188">⚠️ CI history</text><text class="s m" x="840" y="188">✅ git log itself</text>
+    <text class="s" x="440" y="212">rollback</text><text class="s m" x="700" y="212">⚠️ re-run pipeline</text><text class="s m" x="840" y="212">✅ git revert</text>
+    <text class="s" x="440" y="236">many clusters</text><text class="s m" x="700" y="236">❌ keys × N</text><text class="s m" x="840" y="236">✅ one agent each</text>
+    <text class="s" x="440" y="260">CI still needed?</text><text class="s m" x="700" y="260">yes: tests + builds</text><text class="s m" x="840" y="260">✅ Argo deploys</text>
+    <g transform="translate(665,285)"><circle r="11" class="nc"/><text class="nt" dy="4">4</text></g>
+    <text class="s m" x="665" y="309">real teams use BOTH: the courier builds, the caretaker deploys</text>
+  </svg>
+  <p class="foot"><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-12-secrets-and-compare/lessons/12-secrets-and-compare/README.md">Read full lesson 12 →</a></p>
+</section>
 
   <a class="btn" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">Start Lesson 01 →</a>
   <a class="btn alt" href="lesson-diagrams.html">📐 All 12 lesson diagrams</a>
