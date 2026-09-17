@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quiz — 🤖 ArgoCD & GitOps</title>
-<meta name="description" content="Self-test quiz for the 🤖 ArgoCD & GitOps school — 8 questions with explanations.">
-<meta property="og:title" content="Quiz — 🤖 ArgoCD & GitOps"><meta property="og:description" content="8 questions with explanations. Can you pass?"><meta property="og:image" content="https://baluraut.github.io/learn-argocd-school/images/big-picture-4k.png"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image">
+
+<html lang="mr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title data-en="Quiz — 🤖 ArgoCD &amp;amp; GitOps">प्रश्नमंजुषा — 🤖 ArgoCD &amp; GitOps</title>
+<meta content="Self-test quiz for the 🤖 ArgoCD &amp; GitOps school — 8 questions with explanations." name="description"/>
+<meta content="Quiz — 🤖 ArgoCD &amp; GitOps" property="og:title"/><meta content="8 questions with explanations. Can you pass?" property="og:description"/><meta content="https://baluraut.github.io/learn-argocd-school/images/big-picture-4k.png" property="og:image"/><meta content="website" property="og:type"/><meta content="summary_large_image" name="twitter:card"/>
 <style>
 :root { --bg:#f8fafc; --card:#fff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --accent:#ea580c; --ok:#16a34a; --bad:#dc2626; --blue:#2563eb; }
 @media (prefers-color-scheme: dark) { :root { --bg:#0b1220; --card:#131c2e; --ink:#e2e8f0; --muted:#94a3b8; --line:#253349; } }
@@ -22,17 +23,24 @@ a { color:var(--blue); } h1 { font-size:1.9rem; }
 .why { display:none; margin-top:10px; color:var(--muted); font-size:.92rem; border-top:1px dashed var(--line); padding-top:8px; }
 .reset { margin-top:20px; background:var(--accent); color:#fff; border:none; border-radius:10px; padding:10px 18px; font:inherit; font-weight:700; cursor:pointer; }
 footer { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--muted); font-size:.88rem; }
-</style></head><body><div class="wrap">
-<p><a href="index.html">← Back to the course home</a></p>
-<h1>🧪 The 🤖 ArgoCD & GitOps quiz</h1>
-<p class="sub">8 questions — pick an answer, get the why. One attempt per question (until reset).
-Your best score is saved in this browser.</p>
-<div class="scorebox"><div class="score" id="score">0 / 8 · best: —</div></div>
+</style>
+<style id="i18n-css">
+#lang-pick{position:fixed;top:10px;right:10px;z-index:9999;font:600 .85rem -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--card,#fff);color:var(--ink,#0f172a);border:1px solid var(--line,#e2e8f0);border-radius:999px;padding:6px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);cursor:pointer}
+html[lang="mr"] body{font-family:"Noto Sans Devanagari","Mukta","Devanagari Sangam MN","Nirmala UI",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari Sangam MN","Nirmala UI",sans-serif}
+@media print{#lang-pick{display:none}}
+</style></head><body><select aria-label="Language / भाषा" id="lang-pick" onchange="schoolSetLang(this.value)">
+<option value="mr">🇮🇳 मराठी</option><option value="en">🇬🇧 English</option></select><div class="wrap">
+<p data-en='&lt;a href="index.html"&gt;← Back to the course home&lt;/a&gt;'><a href="index.html">← कोर्सच्या मुख्य पानाकडे परत</a></p>
+<h1 data-en="🧪 The 🤖 ArgoCD &amp;amp; GitOps quiz">🧪 🤖 ArgoCD &amp; GitOps प्रश्नमंजुषा</h1>
+<p class="sub" data-en="8 questions — pick an answer, get the why. One attempt per question (until reset).
+Your best score is saved in this browser.">8 प्रश्न — उत्तर निवडा, कारण मिळवा. प्रत्येक प्रश्नाला एकच प्रयत्न (reset पर्यंत). तुमचा सर्वोत्तम गुण या ब्राउझरमध्ये जपला जातो.</p>
+<div class="scorebox"><div class="score" data-en="0 / 8 · best: —" id="score">0 / 8 · सर्वोत्तम: —</div></div>
 <div id="quiz"></div>
-<button class="reset" onclick="reset()">↺ Reset & retake</button>
-<footer>Part of <a href="https://baluraut.github.io/school/">🏫 The School</a> · <a href="index.html">course home</a> ·
-  <a href="https://github.com/BaluRaut/learn-argocd-school/issues">🐛 found a mistake?</a>
-</footer>
+<button class="reset" data-en="↺ Reset &amp;amp; retake" onclick="reset()">↺ Reset &amp; पुन्हा द्या</button>
+<footer data-en='Part of &lt;a href="https://baluraut.github.io/school/"&gt;🏫 The School&lt;/a&gt; · &lt;a href="index.html"&gt;course home&lt;/a&gt; ·
+  &lt;a href="https://github.com/BaluRaut/learn-argocd-school/issues"&gt;🐛 found a mistake?&lt;/a&gt;
+'><a href="https://baluraut.github.io/school/">🏫 द स्कूल</a> चा भाग · <a href="index.html">कोर्स मुख्य पान</a> · <a href="https://github.com/BaluRaut/learn-argocd-school/issues">🐛 चूक सापडली?</a></footer>
 </div>
 <script>
 var QS = [{"q": "GitOps' single source of truth?", "o": ["The cluster", "The git repo — reality must match the book", "The CI server"], "c": 1, "w": "L05: read the book, walk the halls, fix differences, forever."}, {"q": "Pull vs push deployment?", "o": ["Same result, same risk", "An in-cluster agent PULLS from git — cluster keys never leave home", "Pull is slower so worse"], "c": 1, "w": "L04/L05: the courier carries keys around town; the caretaker lives inside."}, {"q": "OutOfSync means…", "o": ["The app crashed", "Git and cluster differ — a comparison result, not an error", "Network down"], "c": 1, "w": "L08: it's the yellow sign, awaiting sync (or auto-sync)."}, {"q": "selfHeal: true does what?", "o": ["Restarts pods", "Reverts manual cluster edits back to what git says", "Fixes YAML typos"], "c": 1, "w": "L09: kubectl-scale by hand → back to the book within minutes."}, {"q": "prune: true does what?", "o": ["Deletes old images", "Deletes cluster resources that were removed from git", "Compresses manifests"], "c": 1, "w": "L08: gone from the book = gone from the room — the book fully rules."}, {"q": "The durable rollback in GitOps?", "o": ["ArgoCD's rollback button alone", "git revert — the book must change or auto-sync reapplies the bad state", "Delete the pod"], "c": 1, "w": "L10: UI rollback + auto-sync = the book wins again; revert the commit."}, {"q": "An ArgoCD Application specifies…", "o": ["Image + replicas", "repo URL + path + target revision + destination", "A Helm license"], "c": 1, "w": "L07: which book, which chapter, which room."}, {"q": "Secrets in a GitOps repo?", "o": ["Base64 is enough", "Never plaintext — Sealed Secrets or External Secrets", "Private repo makes it safe"], "c": 1, "w": "L12: git never forgets; encrypt in, or point out."}];
@@ -67,4 +75,21 @@ function update() {
 }
 function reset() { answered={}; score=0; render(); update(); }
 render(); update();
+</script>
+<script id="i18n-js">
+function schoolSetLang(l){
+  try{localStorage.setItem('school-lang',l)}catch(e){}
+  document.documentElement.setAttribute('lang',l);
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    if(!el.hasAttribute('data-mr')) el.setAttribute('data-mr', el.innerHTML);
+    el.innerHTML = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-mr');
+  });
+  document.querySelectorAll('[data-en-ph]').forEach(function(el){
+    if(!el.hasAttribute('data-mr-ph')) el.setAttribute('data-mr-ph', el.getAttribute('placeholder'));
+    el.setAttribute('placeholder', (l==='en') ? el.getAttribute('data-en-ph') : el.getAttribute('data-mr-ph'));
+  });
+  var p=document.getElementById('lang-pick'); if(p) p.value=l;
+}
+(function(){ var l='mr'; try{ l=localStorage.getItem('school-lang')||'mr'; }catch(e){}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){schoolSetLang(l)}); else schoolSetLang(l); })();
 </script></body></html>
