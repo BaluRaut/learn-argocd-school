@@ -72,8 +72,8 @@
   <text class="s m" x="280" y="458">🪑 drift creeps back between deploys</text>
   <text class="s m" x="280" y="483">— and NOTHING is watching</text>
   <rect class="warn" x="530" y="420" width="400" height="90" rx="14"/>
-  <text class="s m" x="730" y="458">🔑 cluster credentials live OUTSIDE</text>
-  <text class="s m" x="730" y="483">in the CI system's secret store</text>
+  <text class="s m" x="730" y="458">🔑 deploy credentials come from OUTSIDE</text>
+  <text class="s m" x="730" y="483">short-lived at best — still a door</text>
   <rect class="warn" x="970" y="420" width="400" height="90" rx="14"/>
   <text class="s m" x="1170" y="458">🧾 "what's live right now?"</text>
   <text class="s m" x="1170" y="483">CI logs say what was SENT, not what IS</text>
