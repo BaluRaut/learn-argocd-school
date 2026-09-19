@@ -50,7 +50,7 @@
   <rect class="bx" x="1065" y="230" width="105" height="80" rx="10"/>
   <text class="s m" x="1117" y="258">✍️ wait for</text>
   <text class="s m" x="1117" y="280">approval</text>
-  <text class="s m" x="930" y="345">…and it carries the cluster's master key 🔑</text>
+  <text class="s m" x="930" y="345">…and it needs deployment credentials 🔑</text>
 
   <rect class="bxr" x="1450" y="170" width="400" height="220" rx="14"/>
   <text class="t m" x="1650" y="208">🏫 cluster</text>
@@ -132,8 +132,8 @@
   <text class="s m" x="270" y="1002">⏪ rollback = git revert</text>
   <text class="s m" x="270" y="1030">10 seconds, no pipeline re-run</text>
   <rect class="good" x="510" y="960" width="400" height="110" rx="14"/>
-  <text class="s m" x="710" y="1002">🧾 git log = deploy log</text>
-  <text class="s m" x="710" y="1030">who, what, when — audit for free</text>
+  <text class="s m" x="710" y="1002">🧾 git = desired-state history</text>
+  <text class="s m" x="710" y="1030">+ ArgoCD sync history = what ran</text>
   <rect class="good" x="950" y="960" width="400" height="110" rx="14"/>
   <text class="s m" x="1150" y="1002">↩️ drift detected + reverted</text>
   <text class="s m" x="1150" y="1030">continuously, not just at deploys</text>

@@ -23,7 +23,9 @@ a { color:var(--blue); } h1 { font-size:1.9rem; }
 .why { display:none; margin-top:10px; color:var(--muted); font-size:.92rem; border-top:1px dashed var(--line); padding-top:8px; }
 .reset { margin-top:20px; background:var(--accent); color:#fff; border:none; border-radius:10px; padding:10px 18px; font:inherit; font-weight:700; cursor:pointer; }
 footer { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--muted); font-size:.88rem; }
+.parts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px} .pbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:.88rem;cursor:pointer} .pbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 </style>
+
 <style id="i18n-css">
 #lang-pick{position:fixed;top:10px;right:10px;z-index:9999;font:600 .85rem -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--card,#fff);color:var(--ink,#0f172a);border:1px solid var(--line,#e2e8f0);border-radius:999px;padding:6px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);cursor:pointer}
 html[lang="mr"] body{font-family:"Noto Sans Devanagari","Mukta","Devanagari Sangam MN","Nirmala UI",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
@@ -33,9 +35,10 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <option value="mr">🇮🇳 मराठी</option><option value="en">🇬🇧 English</option></select><div class="wrap">
 <p data-en='&lt;a href="index.html"&gt;← Back to the course home&lt;/a&gt;'><a href="index.html">← कोर्सच्या मुख्य पानाकडे परत</a></p>
 <h1 data-en="🧪 The 🤖 ArgoCD &amp;amp; GitOps quiz">🧪 🤖 ArgoCD &amp; GitOps प्रश्नमंजुषा</h1>
-<p class="sub" data-en="8 questions — pick an answer, get the why. One attempt per question (until reset).
-Your best score is saved in this browser.">8 प्रश्न — उत्तर निवडा, कारण मिळवा. प्रत्येक प्रश्नाला एकच प्रयत्न (reset पर्यंत). तुमचा सर्वोत्तम गुण या ब्राउझरमध्ये जपला जातो.</p>
-<div class="scorebox"><div class="score" data-en="0 / 8 · best: —" id="score">0 / 8 · सर्वोत्तम: —</div></div>
+<p class="sub" data-en="16 questions — pick an answer, get the why. Filter by Part below. One attempt per question (until reset).
+Your best score is saved in this browser.">16 प्रश्न — उत्तर निवडा, कारण मिळवा. खाली भागानुसार गाळा. प्रत्येक प्रश्नाला एकच प्रयत्न (reset पर्यंत). तुमचा सर्वोत्तम गुण या ब्राउझरमध्ये जपला जातो.</p>
+<div class="scorebox"><div class="score" data-en="0 / 16 · best: —" id="score">0 / 16 · सर्वोत्तम: —</div></div>
+<div class="parts" id="parts"><button class="pbtn on" data-en="All 16" onclick="setPart(0)">सर्व 16</button><button class="pbtn" data-en="🚪 Part 1 push" onclick="setPart(1)">🚪 भाग 1 push</button><button class="pbtn" data-en="📖 Part 2 pull" onclick="setPart(2)">📖 भाग 2 pull</button></div>
 <div id="quiz"></div>
 <button class="reset" data-en="↺ Reset &amp;amp; retake" onclick="reset()">↺ Reset &amp; पुन्हा द्या</button>
 <footer data-en='Part of &lt;a href="https://baluraut.github.io/school/"&gt;🏫 The School&lt;/a&gt; · &lt;a href="index.html"&gt;course home&lt;/a&gt; ·
@@ -43,12 +46,13 @@ Your best score is saved in this browser.">8 प्रश्न — उत्त
 '><a href="https://baluraut.github.io/school/">🏫 द स्कूल</a> चा भाग · <a href="index.html">कोर्स मुख्य पान</a> · <a href="https://github.com/BaluRaut/learn-argocd-school/issues">🐛 चूक सापडली?</a></footer>
 </div>
 <script>
-var QS = [{"q": "GitOps' single source of truth?", "o": ["The cluster", "The git repo — reality must match the book", "The CI server"], "c": 1, "w": "L05: read the book, walk the halls, fix differences, forever."}, {"q": "Pull vs push deployment?", "o": ["Same result, same risk", "An in-cluster agent PULLS from git — cluster keys never leave home", "Pull is slower so worse"], "c": 1, "w": "L04/L05: the courier carries keys around town; the caretaker lives inside."}, {"q": "OutOfSync means…", "o": ["The app crashed", "Git and cluster differ — a comparison result, not an error", "Network down"], "c": 1, "w": "L08: it's the yellow sign, awaiting sync (or auto-sync)."}, {"q": "selfHeal: true does what?", "o": ["Restarts pods", "Reverts manual cluster edits back to what git says", "Fixes YAML typos"], "c": 1, "w": "L09: kubectl-scale by hand → back to the book within minutes."}, {"q": "prune: true does what?", "o": ["Deletes old images", "Deletes cluster resources that were removed from git", "Compresses manifests"], "c": 1, "w": "L08: gone from the book = gone from the room — the book fully rules."}, {"q": "The durable rollback in GitOps?", "o": ["ArgoCD's rollback button alone", "git revert — the book must change or auto-sync reapplies the bad state", "Delete the pod"], "c": 1, "w": "L10: UI rollback + auto-sync = the book wins again; revert the commit."}, {"q": "An ArgoCD Application specifies…", "o": ["Image + replicas", "repo URL + path + target revision + destination", "A Helm license"], "c": 1, "w": "L07: which book, which chapter, which room."}, {"q": "Secrets in a GitOps repo?", "o": ["Base64 is enough", "Never plaintext — Sealed Secrets or External Secrets", "Private repo makes it safe"], "c": 1, "w": "L12: git never forgets; encrypt in, or point out."}];
-var KEY='quiz-argocd-school', answered={}, score=0;
+var QS = [{"q": "What does kubectl diff -f k8s/ tell you?", "o": ["Whether the YAML is valid", "How the live cluster differs from your files — drift, if you remember to run it", "Which pods are unhealthy"], "c": 1, "w": "L02: the honest mirror — but only for the person who runs it.", "p": 1}, {"q": "The pipeline is green, prod is broken. Most likely?", "o": ["The pipeline lied", "Drift after the deploy — nobody watched the room once the courier left", "kubectl is out of date"], "c": 1, "w": "L04, gap 1: push happens at moments; drift happens in the gaps between them.", "p": 1}, {"q": "Deployment credentials in a push pipeline — the best shape?", "o": ["A cluster-admin kubeconfig stored as a CI secret", "Short-lived credentials via OIDC — still a door from outside, but no long-lived key", "Commit the kubeconfig to the repo"], "c": 1, "w": "L03/L04: OIDC (Docker school L12) removes the stored key; gap 2 is that the door still opens from the street.", "p": 1}, {"q": "CI history answers…", "o": ["What is running right now", "What was sent, and when — not what is live", "Who has cluster access"], "c": 1, "w": "L04, gap 4: the delivery log lives in the mailroom, not in the school.", "p": 1}, {"q": "GitOps' single source of truth?", "o": ["The cluster", "The git repo — reality must match the book", "The CI server"], "c": 1, "w": "L05: read the book, walk the halls, fix differences, forever.", "p": 2}, {"q": "Pull vs push deployment?", "o": ["Same result, same risk", "An in-cluster agent PULLS from git — cluster keys never leave home", "Pull is slower so worse"], "c": 1, "w": "L04/L05: the courier needs deployment credentials from outside (short-lived at best); the caretaker lives inside and needs none.", "p": 2}, {"q": "OutOfSync means…", "o": ["The app crashed", "Git and cluster differ — a comparison result, not an error", "Network down"], "c": 1, "w": "L08: it's the yellow sign, awaiting sync (or auto-sync).", "p": 2}, {"q": "selfHeal: true does what?", "o": ["Restarts pods", "Reverts manual cluster edits back to what git says", "Fixes YAML typos"], "c": 1, "w": "L09: kubectl-scale by hand → back to the book within minutes.", "p": 2}, {"q": "prune: true does what?", "o": ["Deletes old images", "Deletes cluster resources that were removed from git", "Compresses manifests"], "c": 1, "w": "L08: gone from the book = gone from the room — the book fully rules.", "p": 2}, {"q": "The durable rollback in GitOps?", "o": ["ArgoCD's rollback button alone", "git revert — the book must change or auto-sync reapplies the bad state", "Delete the pod"], "c": 1, "w": "L10: UI rollback + auto-sync = the book wins again; revert the commit.", "p": 2}, {"q": "An ArgoCD Application specifies…", "o": ["Image + replicas", "repo URL + path + target revision + destination", "A Helm license"], "c": 1, "w": "L07: which book, which chapter, which room.", "p": 2}, {"q": "Secrets in a GitOps repo?", "o": ["Base64 is enough", "Never plaintext — Sealed Secrets or External Secrets", "Private repo makes it safe"], "c": 1, "w": "L12: git never forgets; encrypt in, or point out.", "p": 2}, {"q": "Who deploys in a mature GitOps setup?", "o": ["ArgoCD does everything; CI is deleted", "CI tests and builds, then commits the new tag; ArgoCD deploys and reconciles", "The developer, with kubectl"], "c": 1, "w": "L12: both robots — the courier builds, the caretaker deploys.", "p": 2}, {"q": "Which history says what was actually synced?", "o": ["git log", "ArgoCD's sync history (argocd app history / the History tab)", "kubectl get events"], "c": 1, "w": "L10: git = desired-state history; ArgoCD sync history = what ran, and when.", "p": 2}, {"q": "When should you keep manual sync?", "o": ["Never — automation is always better", "While learning, when the repo has no review/CI validation, or when prune could delete state you can't recreate", "Only on weekends"], "c": 1, "w": "L08: turn each dial on deliberately, with safeguards; prune earns its place last.", "p": 2}, {"q": "ArgoCD manages ten clusters. Where do the credentials live?", "o": ["In the CI system, one per cluster", "Inside — each cluster's robot pulls the book (or one ArgoCD holds them in-cluster); CI holds none", "In the git repo"], "c": 1, "w": "L06/L11: gap 3 closed — clusters guard themselves; CI keeps no way in.", "p": 2}];
+var KEY='quiz-argocd-school', answered={}, score=0, PART=0, SEL=QS;
+function setPart(p){PART=p;SEL=p?QS.filter(function(q){return q.p===p}):QS;[].slice.call(document.querySelectorAll('.pbtn')).forEach(function(b,i){b.classList.toggle('on',i===p)});reset();}
 var best = parseInt(localStorage.getItem(KEY)||'-1');
 function render() {
   var el = document.getElementById('quiz'); el.innerHTML='';
-  QS.forEach(function(q,i) {
+  SEL.forEach(function(q,i) {
     var card=document.createElement('div'); card.className='qcard';
     card.innerHTML='<h3>'+(i+1)+'. '+q.q+'</h3>';
     q.o.forEach(function(opt,j) {
@@ -70,12 +74,13 @@ function render() {
 }
 function update() {
   var done=Object.keys(answered).length;
-  if (done===QS.length && score>best) { best=score; localStorage.setItem(KEY,best); }
-  document.getElementById('score').textContent=score+' / '+QS.length+(done===QS.length?' — done! 🎓':'')+' · best: '+(best<0?'—':best+'/'+QS.length);
+  if (PART===0 && done===QS.length && score>best) { best=score; localStorage.setItem(KEY,best); }
+  document.getElementById('score').textContent=score+' / '+SEL.length+(done===SEL.length?' — done! 🎓':'')+' · best (all 16): '+(best<0?'—':best+'/'+QS.length);
 }
 function reset() { answered={}; score=0; render(); update(); }
 render(); update();
 </script>
+
 <script id="i18n-js">
 function schoolSetLang(l){
   try{localStorage.setItem('school-lang',l)}catch(e){}

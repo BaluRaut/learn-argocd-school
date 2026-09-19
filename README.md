@@ -6,11 +6,13 @@ honest**. You'll deploy the same tiny demo app ([k8s/](k8s/)) three ways — **b
 CI/CD push pipeline**, and **with ArgoCD (GitOps pull)** — and feel exactly why each step up exists.
 
 🌐 **Interactive site:** **<https://baluraut.github.io/learn-argocd-school/>** — lesson cards +
-every lesson as a numbered box-and-arrow diagram.
+every lesson as a numbered box-and-arrow diagram. Reference pages: [the four gaps + scorecard](https://baluraut.github.io/learn-argocd-school/#gaps) · [analogy map AWS → Docker → Kubernetes → ArgoCD](https://baluraut.github.io/learn-argocd-school/analogy-map.html) · [quiz (16 Qs)](https://baluraut.github.io/learn-argocd-school/quiz.html) · [study plan](https://baluraut.github.io/learn-argocd-school/study-plan.html).
 
 > 🎒 **Prerequisite:** lessons 01–11 of
 > [learn-kubernetes-school](https://github.com/BaluRaut/learn-kubernetes-school) (pods,
 > deployments, services, rollouts). If those words are comfortable, you're ready.
+> Any local cluster (Docker Desktop, minikube, kind, k3d) runs all 12 lessons — no cloud needed.
+> One-command check: `bash scripts/check-setup.sh`.
 
 ## 🗺️ The big picture — one diagram, both worlds
 
@@ -45,7 +47,7 @@ git checkout lesson-02-drift-problem    # ...keep going, one branch at a time
 | 07 | `lesson-07-first-application` | The Application resource | One page of the plan book 📄 |
 | 08 | `lesson-08-sync-policies` | Manual vs auto sync, prune, selfHeal | House rules for the robot 📏 |
 | 09 | `lesson-09-self-heal-drift` | Drift detection & self-heal, live | Chairs moved → chairs put back 🪑↩️ |
-| 10 | `lesson-10-rollback-history` | Rollback = git revert; audit for free | Flip to yesterday's page ⏪ |
+| 10 | `lesson-10-rollback-history` | Rollback = git revert; git + sync history | Flip to yesterday's page ⏪ |
 | 11 | `lesson-11-helm-kustomize-envs` | Helm, Kustomize, dev/stage/prod, app-of-apps | Fill-in-the-blank recipe books 📚 |
 | 12 | `lesson-12-secrets-and-compare` | Secrets in GitOps + the final scorecard | Never glue the key into the book 🔑 |
 
@@ -56,6 +58,8 @@ learn-argocd-school/
 ├── k8s/                     # the demo app: namespace + deployment + service
 │                            #   (real public image — deployable as-is, no placeholders)
 ├── argocd/application.yaml  # the "plan book page" that deploys k8s/ via ArgoCD
+├── argocd/examples/         # Sealed Secret + External Secret shapes (lesson 12)
+├── scripts/check-setup.sh   # is my cluster ready? (context, nodes, permissions)
 └── docs/                    # the GitHub Pages site (home + lesson diagrams)
 ```
 

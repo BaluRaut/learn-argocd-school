@@ -148,7 +148,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <rect class="soft" height="50" rx="8" width="100" x="270" y="105"></rect><text class="s m" x="320" y="135">✅ test</text>
 <rect class="soft" height="50" rx="8" width="100" x="380" y="105"></rect><text class="s m" x="430" y="135">🍱 build</text>
 <rect class="soft" height="50" rx="8" width="100" x="490" y="105"></rect><text class="s m" data-en="🗄️ registry" x="540" y="135">🗄️ रजिस्ट्री</text>
-<text class="s m" data-en="holds the cluster's master key 🔑" x="430" y="185">cluster ची मास्टर किल्ली बाळगतो 🔑</text>
+<text class="s m" data-en="carries deployment credentials 🔑" x="430" y="185">deployment credentials घेऊन जातो 🔑</text>
 <rect class="box" height="90" rx="12" width="210" x="700" y="90"></rect>
 <text class="t m" x="805" y="122">🏫 Cluster</text>
 <text class="s m" data-en="kubectl apply, from outside" x="805" y="144">kubectl apply, बाहेरून</text>
@@ -168,7 +168,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <section class="dsec" id="l04" style="--c:#dc2626">
 <h2 data-en='&lt;span class="ln"&gt;4&lt;/span&gt; 🚪 Limits of push — the courier delivers and LEAVES'><span class="ln">4</span> 🚪 push च्या मर्यादा — कुरिअर पोहोचवतो आणि निघून जातो</h2>
 <p class="d" data-en="A push pipeline deploys moments; nobody guards the state in between.">push pipeline क्षण deploy करते; मधल्या काळात स्थितीवर कोणी पहारा देत नाही.</p>
-<svg aria-label="After the pipeline finishes, drift returns, credentials live outside, and many clusters need many keys" role="img" viewbox="0 0 940 300">
+<svg aria-label="After the pipeline finishes, drift returns, deployment credentials come from outside, and many clusters need many keys" role="img" viewbox="0 0 940 300">
 <rect class="box" height="100" rx="12" width="220" x="40" y="100"></rect>
 <text class="t m" x="150" y="135">📮 pipeline run</text>
 <text class="s m" data-en="deploys at 14:03… then exits" x="150" y="157">14:03 ला deploy… मग बाहेर</text>
@@ -182,8 +182,8 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <text class="s m" data-en="who would even notice?" x="805" y="90">लक्षात तरी कोणाला येईल?</text>
 <g transform="translate(680,75)"><circle class="nc" r="11"></circle><text class="nt" dy="4">2</text></g>
 <rect class="dead" height="70" rx="12" width="210" x="700" y="125"></rect>
-<text class="s m" data-en="🔑 cluster keys live OUTSIDE," x="805" y="153">🔑 cluster च्या किल्ल्या बाहेर,</text>
-<text class="s m" data-en="in the CI system" x="805" y="175">CI प्रणालीत राहतात</text>
+<text class="s m" data-en="🔑 deploy credentials come from" x="805" y="153">🔑 deploy credentials येतात</text>
+<text class="s m" data-en="OUTSIDE — short-lived at best" x="805" y="175">बाहेरून — उत्तम म्हणजे अल्पायुषी</text>
 <g transform="translate(680,160)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <rect class="dead" height="70" rx="12" width="210" x="700" y="210"></rect>
 <text class="s m" x="805" y="238">🏫🏫🏫 10 clusters =</text>
@@ -314,7 +314,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <text class="s m" data-en="hand-edits get reverted" x="805" y="232">हाताने केलेले बदल परत फिरवले</text>
 <g transform="translate(680,100)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <g transform="translate(680,220)"><circle class="nc" r="11"></circle><text class="nt" dy="4">4</text></g>
-<text class="s m" data-en="start manual while learning → automated + prune + selfHeal in production (the strict-but-fair caretaker)" x="475" y="305">शिकताना manual ने सुरू करा → production मध्ये automated + prune + selfHeal (कडक पण न्याय्य केअरटेकर)</text>
+<text class="s m" data-en="start manual while learning → in production turn on automated, selfHeal, then prune — deliberately, with safeguards" x="475" y="305">शिकताना manual ने सुरुवात → production मध्ये automated, selfHeal, मग prune — हेतुपुरस्सर, सुरक्षा-उपायांसह</text>
 </svg>
 <p class="foot" data-en='&lt;a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md"&gt;Read full lesson 08 →&lt;/a&gt;'><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md">संपूर्ण धडा 08 वाचा →</a></p>
 </section>
@@ -373,8 +373,8 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <line class="arr" x1="590" x2="520" y1="130" y2="186"></line>
 <g transform="translate(560,160)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <rect class="dead" height="80" rx="12" width="230" x="680" y="190"></rect>
-<text class="s m" x="795" y="218">🧾 git log = deploy log:</text>
-<text class="s m" data-en="who, what, when — audit free" x="795" y="240">कोण, काय, कधी — audit मोफत</text>
+<text class="s m" data-en="🧾 git = desired history" x="795" y="218">🧾 git = इच्छित इतिहास</text>
+<text class="s m" x="795" y="240">+ ArgoCD sync history</text>
 <g transform="translate(660,230)"><circle class="nc" r="11"></circle><text class="nt" dy="4">4</text></g>
 </svg>
 <p class="foot" data-en='&lt;a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md"&gt;Read full lesson 10 →&lt;/a&gt;'><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md">संपूर्ण धडा 10 वाचा →</a></p>
@@ -444,7 +444,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <text class="s m" style="font-weight:700" x="840" y="112">🤖 pull</text>
 <text class="s" data-en="drift watched?" x="440" y="140">drift वर नजर?</text><text class="s m" data-en="❌ between deploys" x="700" y="140">❌ deploy च्या मधे</text><text class="s m" data-en="✅ every ~3 min" x="840" y="140">✅ दर ~3 मि.</text>
 <text class="s" data-en="cluster keys" x="440" y="164">cluster च्या किल्ल्या</text><text class="s m" data-en="❌ outside, in CI" x="700" y="164">❌ बाहेर, CI मध्ये</text><text class="s m" data-en="✅ stay inside" x="840" y="164">✅ आतच राहतात</text>
-<text class="s" x="440" y="188">deploy log</text><text class="s m" data-en="⚠️ CI history" x="700" y="188">⚠️ CI इतिहास</text><text class="s m" data-en="✅ git log itself" x="840" y="188">✅ खुद्द git log</text>
+<text class="s" data-en="history" x="440" y="188">इतिहास</text><text class="s m" data-en="⚠️ CI history" x="700" y="188">⚠️ CI इतिहास</text><text class="s m" x="840" y="188">✅ git + sync history</text>
 <text class="s" x="440" y="212">rollback</text><text class="s m" data-en="⚠️ re-run pipeline" x="700" y="212">⚠️ pipeline पुन्हा चालवा</text><text class="s m" x="840" y="212">✅ git revert</text>
 <text class="s" data-en="many clusters" x="440" y="236">अनेक clusters</text><text class="s m" data-en="❌ keys × N" x="700" y="236">❌ किल्ल्या × N</text><text class="s m" data-en="✅ one agent each" x="840" y="236">✅ प्रत्येकी एक एजंट</text>
 <text class="s" data-en="CI still needed?" x="440" y="260">CI तरीही लागतो?</text><text class="s m" data-en="yes: tests + builds" x="700" y="260">हो: tests + builds</text><text class="s m" data-en="✅ Argo deploys" x="840" y="260">✅ Argo deploy करतो</text>

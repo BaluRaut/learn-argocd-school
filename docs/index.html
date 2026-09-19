@@ -49,6 +49,7 @@
   footer { margin-top: 56px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: .88rem; }
 
   @media (min-width: 1660px) { .wrap { max-width: 1580px; } }
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-top:12px} .tbl table{border-collapse:collapse;width:100%;font-size:.9rem} .tbl th,.tbl td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top} .tbl th{background:var(--bg)}
 </style>
 <style>
   .dsec { background: var(--card); border: 1px solid var(--line); border-top: 6px solid var(--c, var(--accent)); border-radius: 16px; padding: 22px 22px 16px; margin-top: 26px; scroll-margin-top: 16px; }
@@ -112,7 +113,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <li data-en="git becomes the single source of truth">git सत्याचा एकमेव स्रोत बनतो</li>
 <li data-en="the caretaker robot 🤖 lives inside the cluster">केअरटेकर रोबोट 🤖 cluster च्या आत राहतो</li>
 <li data-en="drift gets reverted; deploys = commits">drift परत फिरवला जातो; deploy = commits</li>
-<li>rollback = <code>git revert</code> · audit = <code>git log</code></li>
+<li data-en="rollback = &lt;code&gt;git revert&lt;/code&gt; · history = git + ArgoCD sync history">rollback = <code>git revert</code> · इतिहास = git + ArgoCD sync history</li>
 </ul>
 </div>
 </div>
@@ -123,15 +124,37 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <figure style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:16px">
 <a href="images/big-picture-4k.png"><img alt="The big picture: deploying without ArgoCD (push model, with its gaps) vs with ArgoCD (GitOps pull model, with its wins)" loading="lazy" src="images/big-picture.svg" style="width:100%;height:auto;border-radius:8px;background:#fff"/></a>
 </figure>
+<div class="callout" data-en='🎒 &lt;b&gt;Before lesson 01:&lt;/b&gt; do &lt;a href="https://baluraut.github.io/learn-kubernetes-school/"&gt;Kubernetes school&lt;/a&gt; lessons &lt;b&gt;1–11&lt;/b&gt; first — especially Deployments (L03), Services (L04) and rollouts (L11); the demo app here is the same three manifests (&lt;a href="https://github.com/BaluRaut/learn-argocd-school/tree/main/k8s"&gt;k8s/&lt;/a&gt;: namespace, deployment, service). &lt;b&gt;Cluster options:&lt;/b&gt; any local cluster is enough for all 12 lessons — Docker Desktop, minikube, kind or k3d — no cloud needed. A cloud cluster (EKS) works too, but it bills for nodes and load balancers the whole time; destroy it the same day. &lt;b&gt;Ready check, one command:&lt;/b&gt; &lt;code&gt;bash scripts/check-setup.sh&lt;/code&gt; (kubectl context, nodes Ready, permission to create namespaces, optional argocd CLI). Coming from the AWS / Docker / Kubernetes schools? Keep the &lt;a href="analogy-map.html"&gt;🗺️ analogy map&lt;/a&gt; open.' id="setup">🎒 <b>धडा 01 आधी:</b> आधी <a href="https://baluraut.github.io/learn-kubernetes-school/">Kubernetes शाळेचे</a> धडे <b>1–11</b> करा — विशेषतः Deployments (L03), Services (L04) आणि rollouts (L11); इथले डेमो ॲप तेच तीन manifests आहेत (<a href="https://github.com/BaluRaut/learn-argocd-school/tree/main/k8s">k8s/</a>: namespace, deployment, service). <b>Cluster चे पर्याय:</b> सर्व 12 धड्यांसाठी कोणताही स्थानिक cluster पुरेसा — Docker Desktop, minikube, kind किंवा k3d — क्लाउडची गरज नाही. क्लाउड cluster (EKS) ही चालतो, पण nodes आणि load balancers चे बिल सतत चालू राहते; त्याच दिवशी नष्ट करा. <b>तयारी तपासणी, एका command ने:</b> <code>bash scripts/check-setup.sh</code> (kubectl context, nodes Ready, namespace तयार करण्याची परवानगी, ऐच्छिक argocd CLI). AWS / Docker / Kubernetes शाळांतून येताय? <a href="analogy-map.html">🗺️ उपमांचा नकाशा</a> उघडा ठेवा.</div>
 <h2 data-en="🚪 Part 1 — WITHOUT ArgoCD (lessons 1–4)" id="part1">🚪 भाग 1 — ArgoCD शिवाय (धडे 1–4)</h2>
 <p class="sub" data-en="Feel the pain first: hand deploys, invisible drift, then a courier robot (CI/CD push) —
   and the four gaps it can never close. One git branch = one idea; branch 07 contains lessons 01–07.">आधी वेदना अनुभवा: हाताने deploy, अदृश्य drift, मग कुरिअर रोबोट (CI/CD push) — आणि तो कधीच बुजवू न शकणाऱ्या चार त्रुटी. एक git ब्रँच = एक कल्पना; ब्रँच 07 मध्ये धडे 01–07 आहेत.</p>
 <div class="grid">
 <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">1</span><h3 data-en="🎒 Deploy by hand">🎒 हाताने deploy</h3></div><span class="ana" data-en="Carrying homework to school yourself — fine once, awful daily.">गृहपाठ स्वतः शाळेत नेणे — एकदा ठीक, रोज भयंकर.</span><code>lesson-01-deploy-by-hand</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-01-deploy-by-hand/lessons/01-deploy-by-hand/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l01">आकृती पहा ↗</a></div>
 <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">2</span><h3 data-en="🪑 The drift problem">🪑 drift ची समस्या</h3></div><span class="ana" data-en="No master seating chart — nobody knows how the room should look.">मुख्य बैठक-तक्ता नाही — खोली कशी दिसावी हे कोणालाच माहीत नाही.</span><code>lesson-02-drift-problem</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-02-drift-problem/lessons/02-drift-problem/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l02">आकृती पहा ↗</a></div>
-<div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">3</span><h3>📮 CI/CD push pipeline</h3></div><span class="ana" data-en="The courier robot — tests, builds, delivers with a master key.">कुरिअर रोबोट — तपासतो, बांधतो, मास्टर किल्लीने पोहोचवतो.</span><code>lesson-03-cicd-push</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-03-cicd-push/lessons/03-cicd-push/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l03">आकृती पहा ↗</a></div>
+<div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">3</span><h3>📮 CI/CD push pipeline</h3></div><span class="ana" data-en="The courier robot — tests, builds, delivers with deployment credentials.">कुरिअर रोबोट — तपासतो, बांधतो, deployment credentials घेऊन पोहोचवतो.</span><code>lesson-03-cicd-push</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-03-cicd-push/lessons/03-cicd-push/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l03">आकृती पहा ↗</a></div>
 <div class="lesson" style="--c:#dc2626"><div class="top"><span class="num">4</span><h3 data-en="🚪 Limits of push">🚪 push च्या मर्यादा</h3></div><span class="ana" data-en="The courier delivers… and leaves. Nobody watches the room after.">कुरिअर पोहोचवतो… आणि निघून जातो. नंतर खोलीवर कोणी लक्ष ठेवत नाही.</span><code>lesson-04-limits-of-push</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-04-limits-of-push/lessons/04-limits-of-push/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l04">आकृती पहा ↗</a></div>
 </div>
+<h2 data-en="🚪 The four gaps of push — and where Part 2 closes each" id="gaps">🚪 Push चे चार खड्डे — आणि भाग 2 प्रत्येक कुठे बुजवतो</h2>
+<p class="sub" data-en="Lesson 04 is the hinge of the course. Memorise the four numbers; every Part 2 lesson ticks one off.">धडा 04 हा कोर्सचा बिजागर आहे. चार आकडे लक्षात ठेवा; भाग 2 चा प्रत्येक धडा एक खड्डा बुजवतो.</p>
+<div class="tbl"><table>
+<tr><th>#</th><th data-en="The gap">खड्डा</th><th data-en="What it feels like">कसे जाणवते</th><th data-en="Closed in">बुजवला जातो</th></tr>
+<tr><td>1</td><td data-en="&lt;b&gt;Drift between deploys is invisible&lt;/b&gt;"><b>Deploy मधल्या काळातला drift अदृश्य असतो</b></td><td data-en="the courier delivers at 14:03 and leaves; a kid moves the chairs at 15:00; nobody knows until the next push">कुरिअर 14:03 ला पोहोचवतो आणि निघून जातो; एक मूल 15:00 ला खुर्च्या हलवते; पुढच्या push पर्यंत कोणालाच कळत नाही</td><td data-en='&lt;a href="#l09"&gt;lesson 09&lt;/a&gt; — selfHeal'><a href="#l09">धडा 09</a> — selfHeal</td></tr>
+<tr><td>2</td><td data-en="&lt;b&gt;Deployment credentials must come from outside&lt;/b&gt;"><b>Deployment credentials बाहेरून मिळवावी लागतात</b></td><td data-en="the courier needs a way in — a stored kubeconfig at worst, a short-lived OIDC badge at best, but a door from the street either way">कुरिअरला आत जायचा मार्ग लागतो — वाईटात वाईट साठवलेला kubeconfig, उत्तम म्हणजे अल्पायुषी OIDC बॅज, पण दोन्ही प्रकारे रस्त्यावरून उघडणारे दार</td><td data-en='&lt;a href="#l07"&gt;lesson 07&lt;/a&gt; — the robot pulls from inside'><a href="#l07">धडा 07</a> — रोबोट आतून खेचतो</td></tr>
+<tr><td>3</td><td data-en="&lt;b&gt;Every extra cluster multiplies keys and pipelines&lt;/b&gt;"><b>प्रत्येक जादा cluster किल्ल्या आणि pipelines दुप्पट करतो</b></td><td data-en="ten schools, ten keys in the van, ten pipeline configs to rotate">दहा शाळा, व्हॅनमध्ये दहा किल्ल्या, फिरवायचे दहा pipeline configs</td><td data-en='&lt;a href="#l11"&gt;lesson 11&lt;/a&gt; — one book, one robot per cluster, app-of-apps'><a href="#l11">धडा 11</a> — एक वही, प्रत्येक cluster ला एक रोबोट, app-of-apps</td></tr>
+<tr><td>4</td><td data-en="&lt;b&gt;The delivery log is not the live truth&lt;/b&gt;"><b>डिलिव्हरीची नोंद म्हणजे प्रत्यक्ष सत्य नव्हे</b></td><td data-en="CI history says what was &lt;i&gt;sent&lt;/i&gt;, not what is running now">CI इतिहास सांगतो काय <i>पाठवले</i>, आत्ता काय चालू आहे ते नाही</td><td data-en='&lt;a href="#l10"&gt;lesson 10&lt;/a&gt; — Synced = room matches page; sync history says when'><a href="#l10">धडा 10</a> — Synced = खोली पानाशी जुळते; sync history सांगते कधी</td></tr>
+</table></div>
+<h2 data-en="📊 The scorecard — by hand · CI/CD push · ArgoCD pull" id="scorecard">📊 गुणपत्रक — हाताने · CI/CD push · ArgoCD pull</h2>
+<p class="sub" data-en="The short version, so you can keep score while you learn. Lesson 12 has the full one with commentary — and the reminder that the mature setup is &lt;b&gt;both robots&lt;/b&gt;: CI still tests and builds, ArgoCD deploys.">छोटी आवृत्ती, म्हणजे शिकताना गुण मोजता येतील. पूर्ण आवृत्ती टिप्पण्यांसह धडा 12 मध्ये — आणि आठवण: प्रौढ रचनेत <b>दोन्ही रोबोट</b> असतात: CI अजूनही तपासतो आणि बांधतो, ArgoCD deploy करतो.</p>
+<div class="tbl"><table>
+<tr><th></th><th data-en="🎒 by hand">🎒 हाताने</th><th>📮 CI/CD push</th><th>🤖 GitOps pull (ArgoCD)</th></tr>
+<tr><td data-en="Repeatable deploys">पुन्हा-पुन्हा तसेच deploy</td><td data-en="❌ your memory">❌ तुमची स्मरणशक्ती</td><td>✅ pipeline</td><td data-en="✅ reconcile loop">✅ reconcile लूप</td></tr>
+<tr><td data-en="Drift between deploys">Deploy मधल्या काळातला drift</td><td data-en="😱 invisible">😱 अदृश्य</td><td data-en="❌ invisible">❌ अदृश्य</td><td data-en="✅ detected, reverted in minutes">✅ ओळखला, मिनिटांत परत फिरवला</td></tr>
+<tr><td>Deployment credentials</td><td data-en="🔑 every laptop">🔑 प्रत्येक लॅपटॉप</td><td data-en="⚠️ obtained from outside (short-lived with OIDC)">⚠️ बाहेरून मिळवलेली (OIDC सह अल्पायुषी)</td><td data-en="✅ never leave the cluster">✅ cluster बाहेर कधीच जात नाहीत</td></tr>
+<tr><td data-en="&quot;What's running right now?&quot;">"आत्ता काय चालू आहे?"</td><td>🤷</td><td data-en="⚠️ what CI &lt;i&gt;sent&lt;/i&gt;">⚠️ CI ने जे <i>पाठवले</i> ते</td><td data-en="✅ the book — Synced means it matches">✅ वही — Synced म्हणजे जुळते</td></tr>
+<tr><td>Rollback</td><td data-en="repaint from memory">आठवणीतून पुन्हा रंगवा</td><td data-en="⚠️ re-run an old pipeline">⚠️ जुनी pipeline पुन्हा चालवा</td><td>✅ <code>git revert</code></td></tr>
+<tr><td data-en="History">इतिहास</td><td>shell history</td><td>⚠️ CI logs</td><td data-en="✅ git (desired) + ArgoCD sync history (actual)">✅ git (इच्छित) + ArgoCD sync history (प्रत्यक्ष)</td></tr>
+<tr><td>10 clusters</td><td data-en="❌ 10× the pain">❌ 10× त्रास</td><td data-en="❌ 10 credentials in CI">❌ CI मध्ये 10 credentials</td><td data-en="✅ 10 robots, same book">✅ 10 रोबोट, तीच वही</td></tr>
+</table></div>
 <h2 data-en="📖 Part 2 — WITH ArgoCD (lessons 5–12)" id="part2">📖 भाग 2 — ArgoCD सह (धडे 5–12)</h2>
 <p class="sub" data-en="The cure: git becomes the master plan book, and ArgoCD — the caretaker robot living
   INSIDE the cluster — keeps reality matching it, forever.">उपाय: git मुख्य प्लॅन-वही बनते, आणि ArgoCD — cluster च्या आत राहणारा केअरटेकर रोबोट — वास्तव तिच्याशी कायम जुळते ठेवतो.</p>
@@ -145,6 +168,7 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">11</span><h3>📚 Helm, Kustomize &amp; envs</h3></div><span class="ana" data-en="Fill-in-the-blank recipe books — one recipe, many classrooms.">रिकाम्या जागा भरण्याची पाककृती-पुस्तके — एक पाककृती, अनेक वर्ग.</span><code>lesson-11-helm-kustomize-envs</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-11-helm-kustomize-envs/lessons/11-helm-kustomize-envs/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l11">आकृती पहा ↗</a></div>
 <div class="lesson" style="--c:#16a34a"><div class="top"><span class="num">12</span><h3 data-en="🔑 Secrets + the scorecard">🔑 Secrets + गुणपत्रक</h3></div><span class="ana" data-en="Never glue the locker key into the book — and the final verdict.">लॉकरची किल्ली कधीच वहीत चिकटवू नका — आणि अंतिम निकाल.</span><code>lesson-12-secrets-and-compare</code><a class="go" data-en="Read lesson →" href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-12-secrets-and-compare/lessons/12-secrets-and-compare/README.md">धडा वाचा →</a><a class="go" data-en="See the diagram ↗" href="lesson-diagrams.html#l12">आकृती पहा ↗</a></div>
 </div>
+<div class="callout" data-en="🗣️ &lt;b&gt;Explain this out loud — after Part 2:&lt;/b&gt; (1) Someone runs &lt;code&gt;kubectl scale --replicas=10&lt;/code&gt; on a Deployment ArgoCD manages. What happens with selfHeal on? And off? (2) A bad image tag reached prod through git. Roll it back in a pure GitOps setup — and why is the UI's Rollback button not the durable fix? (3) Why does CI no longer need a way into the cluster at all — and what does CI still do? (4) Push vs pull, one sentence each — and which of the four gaps does each leave open? (5) A resource was deleted from git but is still running. Which dial is off, and what is the risk of turning it on? (6) Git history vs ArgoCD sync history — which answers &quot;what is running right now?&quot; and which answers &quot;who asked for it?&quot;" id="prompts">🗣️ <b>मोठ्याने समजावा — भाग 2 नंतर:</b> (1) ArgoCD सांभाळत असलेल्या Deployment वर कोणीतरी <code>kubectl scale --replicas=10</code> चालवतो. selfHeal चालू असताना काय होते? आणि बंद असताना? (2) एक चुकीचा image tag git मार्गे prod मध्ये पोहोचला. शुद्ध GitOps रचनेत तो परत फिरवा — आणि UI चे Rollback बटण टिकाऊ उपाय का नाही? (3) CI ला आता cluster मध्ये जायचा मार्ग अजिबात का लागत नाही — आणि CI अजूनही काय करतो? (4) Push विरुद्ध pull, प्रत्येकी एक वाक्य — आणि चार खड्ड्यांपैकी कोणता प्रत्येकजण उघडा ठेवतो? (5) git मधून एक resource हटवला पण अजून चालू आहे. कोणते dial बंद आहे, आणि ते चालू करण्याचा धोका काय? (6) Git इतिहास विरुद्ध ArgoCD sync history — "आत्ता काय चालू आहे?" कोण सांगते आणि "कोणी मागितले?" कोण?</div>
 <pre><code># take the course locally (any local cluster — Docker Desktop, minikube, kind):
 git clone https://github.com/BaluRaut/learn-argocd-school.git
 cd learn-argocd-school
@@ -220,7 +244,7 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <rect class="soft" height="50" rx="8" width="100" x="270" y="105"></rect><text class="s m" x="320" y="135">✅ test</text>
 <rect class="soft" height="50" rx="8" width="100" x="380" y="105"></rect><text class="s m" x="430" y="135">🍱 build</text>
 <rect class="soft" height="50" rx="8" width="100" x="490" y="105"></rect><text class="s m" data-en="🗄️ registry" x="540" y="135">🗄️ रजिस्ट्री</text>
-<text class="s m" data-en="holds the cluster's master key 🔑" x="430" y="185">cluster ची मास्टर किल्ली बाळगतो 🔑</text>
+<text class="s m" data-en="carries deployment credentials 🔑" x="430" y="185">deployment credentials घेऊन जातो 🔑</text>
 <rect class="box" height="90" rx="12" width="210" x="700" y="90"></rect>
 <text class="t m" x="805" y="122">🏫 Cluster</text>
 <text class="s m" data-en="kubectl apply, from outside" x="805" y="144">kubectl apply, बाहेरून</text>
@@ -240,7 +264,7 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <section class="dsec" id="l04" style="--c:#dc2626">
 <h2 data-en='&lt;span class="ln"&gt;4&lt;/span&gt; 🚪 Limits of push — the courier delivers and LEAVES'><span class="ln">4</span> 🚪 push च्या मर्यादा — कुरिअर पोहोचवतो आणि निघून जातो</h2>
 <p class="d" data-en="A push pipeline deploys moments; nobody guards the state in between.">push pipeline क्षण deploy करते; मधल्या काळात स्थितीवर कोणी पहारा देत नाही.</p>
-<svg aria-label="After the pipeline finishes, drift returns, credentials live outside, and many clusters need many keys" role="img" viewbox="0 0 940 300">
+<svg aria-label="After the pipeline finishes, drift returns, deployment credentials come from outside, and many clusters need many keys" role="img" viewbox="0 0 940 300">
 <rect class="box" height="100" rx="12" width="220" x="40" y="100"></rect>
 <text class="t m" x="150" y="135">📮 pipeline run</text>
 <text class="s m" data-en="deploys at 14:03… then exits" x="150" y="157">14:03 ला deploy… मग बाहेर</text>
@@ -254,8 +278,8 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <text class="s m" data-en="who would even notice?" x="805" y="90">लक्षात तरी कोणाला येईल?</text>
 <g transform="translate(680,75)"><circle class="nc" r="11"></circle><text class="nt" dy="4">2</text></g>
 <rect class="dead" height="70" rx="12" width="210" x="700" y="125"></rect>
-<text class="s m" data-en="🔑 cluster keys live OUTSIDE," x="805" y="153">🔑 cluster च्या किल्ल्या बाहेर,</text>
-<text class="s m" data-en="in the CI system" x="805" y="175">CI प्रणालीत राहतात</text>
+<text class="s m" data-en="🔑 deploy credentials come from" x="805" y="153">🔑 deploy credentials येतात</text>
+<text class="s m" data-en="OUTSIDE — short-lived at best" x="805" y="175">बाहेरून — उत्तम म्हणजे अल्पायुषी</text>
 <g transform="translate(680,160)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <rect class="dead" height="70" rx="12" width="210" x="700" y="210"></rect>
 <text class="s m" x="805" y="238">🏫🏫🏫 10 clusters =</text>
@@ -386,7 +410,7 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <text class="s m" data-en="hand-edits get reverted" x="805" y="232">हाताने केलेले बदल परत फिरवले</text>
 <g transform="translate(680,100)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <g transform="translate(680,220)"><circle class="nc" r="11"></circle><text class="nt" dy="4">4</text></g>
-<text class="s m" data-en="start manual while learning → automated + prune + selfHeal in production (the strict-but-fair caretaker)" x="475" y="305">शिकताना manual ने सुरू करा → production मध्ये automated + prune + selfHeal (कडक पण न्याय्य केअरटेकर)</text>
+<text class="s m" data-en="start manual while learning → in production turn on automated, selfHeal, then prune — deliberately, with safeguards" x="475" y="305">शिकताना manual ने सुरुवात → production मध्ये automated, selfHeal, मग prune — हेतुपुरस्सर, सुरक्षा-उपायांसह</text>
 </svg>
 <p class="foot" data-en='&lt;a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md"&gt;Read full lesson 08 →&lt;/a&gt;'><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-08-sync-policies/lessons/08-sync-policies/README.md">संपूर्ण धडा 08 वाचा →</a></p>
 </section>
@@ -445,8 +469,8 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <line class="arr" x1="590" x2="520" y1="130" y2="186"></line>
 <g transform="translate(560,160)"><circle class="nc" r="11"></circle><text class="nt" dy="4">3</text></g>
 <rect class="dead" height="80" rx="12" width="230" x="680" y="190"></rect>
-<text class="s m" x="795" y="218">🧾 git log = deploy log:</text>
-<text class="s m" data-en="who, what, when — audit free" x="795" y="240">कोण, काय, कधी — audit मोफत</text>
+<text class="s m" data-en="🧾 git = desired history" x="795" y="218">🧾 git = इच्छित इतिहास</text>
+<text class="s m" x="795" y="240">+ ArgoCD sync history</text>
 <g transform="translate(660,230)"><circle class="nc" r="11"></circle><text class="nt" dy="4">4</text></g>
 </svg>
 <p class="foot" data-en='&lt;a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md"&gt;Read full lesson 10 →&lt;/a&gt;'><a href="https://github.com/BaluRaut/learn-argocd-school/blob/lesson-10-rollback-history/lessons/10-rollback-history/README.md">संपूर्ण धडा 10 वाचा →</a></p>
@@ -516,7 +540,7 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <text class="s m" style="font-weight:700" x="840" y="112">🤖 pull</text>
 <text class="s" data-en="drift watched?" x="440" y="140">drift वर नजर?</text><text class="s m" data-en="❌ between deploys" x="700" y="140">❌ deploy च्या मधे</text><text class="s m" data-en="✅ every ~3 min" x="840" y="140">✅ दर ~3 मि.</text>
 <text class="s" data-en="cluster keys" x="440" y="164">cluster च्या किल्ल्या</text><text class="s m" data-en="❌ outside, in CI" x="700" y="164">❌ बाहेर, CI मध्ये</text><text class="s m" data-en="✅ stay inside" x="840" y="164">✅ आतच राहतात</text>
-<text class="s" x="440" y="188">deploy log</text><text class="s m" data-en="⚠️ CI history" x="700" y="188">⚠️ CI इतिहास</text><text class="s m" data-en="✅ git log itself" x="840" y="188">✅ खुद्द git log</text>
+<text class="s" data-en="history" x="440" y="188">इतिहास</text><text class="s m" data-en="⚠️ CI history" x="700" y="188">⚠️ CI इतिहास</text><text class="s m" x="840" y="188">✅ git + sync history</text>
 <text class="s" x="440" y="212">rollback</text><text class="s m" data-en="⚠️ re-run pipeline" x="700" y="212">⚠️ pipeline पुन्हा चालवा</text><text class="s m" x="840" y="212">✅ git revert</text>
 <text class="s" data-en="many clusters" x="440" y="236">अनेक clusters</text><text class="s m" data-en="❌ keys × N" x="700" y="236">❌ किल्ल्या × N</text><text class="s m" data-en="✅ one agent each" x="840" y="236">✅ प्रत्येकी एक एजंट</text>
 <text class="s" data-en="CI still needed?" x="440" y="260">CI तरीही लागतो?</text><text class="s m" data-en="yes: tests + builds" x="700" y="260">हो: tests + builds</text><text class="s m" data-en="✅ Argo deploys" x="840" y="260">✅ Argo deploy करतो</text>
@@ -530,6 +554,7 @@ git checkout lesson-01-deploy-by-hand   # then open lessons/01-deploy-by-hand/RE
 <a class="btn alt" data-en="🧪 Quiz" href="quiz.html">🧪 प्रश्नमंजुषा</a>
 <a class="btn alt" data-en="🗓️ Study plan" href="study-plan.html">🗓️ अभ्यास योजना</a>
 <a class="btn alt" data-en="⏮️ Before &amp;amp; trade-offs" href="before-and-tradeoffs.html">⏮️ आधी काय होते &amp; फायदे-तोटे</a>
+<a class="btn alt" data-en="🗺️ Analogy map" href="analogy-map.html">🗺️ उपमांचा नकाशा</a>
 <a class="btn alt" data-en="☸️ The Kubernetes course" href="https://baluraut.github.io/learn-kubernetes-school/">☸️ Kubernetes कोर्स</a>
 <footer data-en='
     Learn ArgoCD School · with &amp;amp; without GitOps ·

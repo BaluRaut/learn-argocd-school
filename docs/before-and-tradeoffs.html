@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="mr">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title data-en="Before &amp;amp; trade-offs — Learn ArgoCD School">आधी काय होते &amp; फायदे-तोटे — Learn ArgoCD School</title>
+<title>Before &amp; trade-offs — Learn ArgoCD School</title>
 <meta content="For every big CI/CD and GitOps idea: what the world looked like before it, its merits and demerits, and where to use it vs where not." name="description"/>
 <meta content="Before &amp; trade-offs — Learn ArgoCD School" property="og:title"/>
 <meta content="For every big CI/CD and GitOps idea: what the world looked like before it, its merits and demerits, and where to use it vs where not." property="og:description"/>
@@ -46,22 +46,15 @@
 
   @media (min-width: 1660px) { .wrap { max-width: 1580px; } }
 </style>
-
-<style id="i18n-css">
-#lang-pick{position:fixed;top:10px;right:10px;z-index:9999;font:600 .85rem -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--card,#fff);color:var(--ink,#0f172a);border:1px solid var(--line,#e2e8f0);border-radius:999px;padding:6px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);cursor:pointer}
-html[lang="mr"] body{font-family:"Noto Sans Devanagari","Mukta","Devanagari Sangam MN","Nirmala UI",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
-html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari Sangam MN","Nirmala UI",sans-serif}
-@media print{#lang-pick{display:none}}
-</style></head>
-<body><select aria-label="Language / भाषा" id="lang-pick" onchange="schoolSetLang(this.value)">
-<option value="mr">🇮🇳 मराठी</option><option value="en">🇬🇧 English</option></select>
+</head>
+<body>
 <div class="wrap">
 <header>
-<p data-en='&lt;a href="index.html"&gt;← Back to the course home&lt;/a&gt;'><a href="index.html">← कोर्सच्या मुख्य पानाकडे परत</a></p>
-<h1 data-en="⏮️ Before &amp;amp; trade-offs">⏮️ आधी काय होते &amp; फायदे-तोटे</h1>
-<p class="sub" data-en="Every tool replaced something worse — and is itself the wrong tool somewhere.
-  For each big idea in this course: what life was like &lt;b&gt;before&lt;/b&gt; it, its honest
-  &lt;b&gt;merits ✅ and demerits ❌&lt;/b&gt;, and &lt;b&gt;where to use it 👍 vs where not 👎&lt;/b&gt;.">प्रत्येक साधनाने काहीतरी वाईट गोष्ट बदलली — आणि तेच साधन कुठेतरी चुकीचे ठरते. या कोर्समधील प्रत्येक मोठ्या कल्पनेसाठी: ती येण्या<b>आधी</b> जीवन कसे होते, तिचे प्रामाणिक <b>फायदे ✅ आणि तोटे ❌</b>, आणि <b>कुठे वापरावी 👍 विरुद्ध कुठे नाही 👎</b>.</p>
+<p><a href="index.html">← Back to the course home</a></p>
+<h1>⏮️ Before &amp; trade-offs</h1>
+<p class="sub">Every tool replaced something worse — and is itself the wrong tool somewhere.
+  For each big idea in this course: what life was like <b>before</b> it, its honest
+  <b>merits ✅ and demerits ❌</b>, and <b>where to use it 👍 vs where not 👎</b>.</p>
 <nav class="toc">
 <a href="#cicd">📮 CI/CD</a><a href="#gitops">📖 GitOps</a>
 <a href="#argocd">🤖 ArgoCD</a><a href="#templates">📚 Helm/Kustomize</a>
@@ -69,182 +62,165 @@ html[lang="mr"] svg text{font-family:"Noto Sans Devanagari","Mukta","Devanagari 
 </nav>
 </header>
 <section class="term" id="cicd" style="--c:#dc2626">
-<h2 data-en="📮 CI/CD pipelines — lesson 03">📮 CI/CD pipelines — धडा 03</h2>
-<div class="hist"><b data-en="⏮️ Before CI/CD">⏮️ CI/CD च्या आधी</b>
-<p data-en="&lt;b&gt;FTP Fridays.&lt;/b&gt; One anointed &quot;deploy person&quot;, a printed release checklist, a maintenance
-    window at midnight, and tests run &quot;when there's time&quot;. Integration happened once a month and
-    was named &quot;integration hell&quot; for a reason. CI (2000s) made every push tested; CD made every
-    good build shippable."><b>FTP शुक्रवार.</b> एक नेमलेली "deploy व्यक्ती", छापलेली release यादी, मध्यरात्रीची maintenance window, आणि "वेळ मिळाल्यावर" चालवलेल्या tests. Integration महिन्यातून एकदा होई आणि त्याला "integration hell" म्हणण्यामागे कारण होते. CI (2000 चे दशक) ने प्रत्येक push तपासला; CD ने प्रत्येक चांगला build पाठवण्यायोग्य केला.</p>
+<h2>📮 CI/CD pipelines — lesson 03</h2>
+<div class="hist"><b>⏮️ Before CI/CD</b>
+<p><b>FTP Fridays.</b> One anointed "deploy person", a printed release checklist, a maintenance
+    window at midnight, and tests run "when there's time". Integration happened once a month and
+    was named "integration hell" for a reason. CI (2000s) made every push tested; CD made every
+    good build shippable.</p>
 </div>
 <div class="quad">
-<div class="q merit"><h4 data-en="✅ Merits">✅ फायदे</h4><ul>
-<li data-en="every change tested, built, and traceable">प्रत्येक बदल तपासलेला, बांधलेला, आणि शोधता येणारा</li>
-<li data-en="no human steps to forget">विसरण्यासारखी माणसाची पावले नाहीत</li>
-<li data-en="deploys become boring (the goal!)">deploy कंटाळवाणे होतात (हेच ध्येय!)</li>
+<div class="q merit"><h4>✅ Merits</h4><ul>
+<li>every change tested, built, and traceable</li>
+<li>no human steps to forget</li>
+<li>deploys become boring (the goal!)</li>
 </ul></div>
-<div class="q demerit"><h4 data-en="❌ Demerits">❌ तोटे</h4><ul>
-<li data-en="pipelines are code you must maintain">pipelines म्हणजे तुम्हाला सांभाळावा लागणारा कोड</li>
-<li data-en="push-style: cluster keys live in CI (lesson 04)">push-शैली: cluster च्या किल्ल्या CI मध्ये राहतात (धडा 04)</li>
-<li data-en="blind between runs — drift goes unnoticed">runs च्या मधे आंधळे — drift दुर्लक्षित राहतो</li>
+<div class="q demerit"><h4>❌ Demerits</h4><ul>
+<li>pipelines are code you must maintain</li>
+<li>push-style: cluster keys live in CI (lesson 04)</li>
+<li>blind between runs — drift goes unnoticed</li>
 </ul></div>
-<div class="q use"><h4 data-en="👍 Use when">👍 वापरा जेव्हा</h4><ul>
-<li data-en="honestly: almost always — any team, any repo">प्रामाणिकपणे: जवळपास नेहमी — कोणतीही टीम, कोणताही रेपो</li>
-<li data-en="at minimum: CI (tests + builds) from day one">किमान: पहिल्या दिवसापासून CI (tests + builds)</li>
+<div class="q use"><h4>👍 Use when</h4><ul>
+<li>honestly: almost always — any team, any repo</li>
+<li>at minimum: CI (tests + builds) from day one</li>
 </ul></div>
-<div class="q avoid"><h4 data-en="👎 Think twice when">👎 दोनदा विचार करा जेव्हा</h4><ul>
-<li data-en="a throwaway prototype you'll delete next week">पुढच्या आठवड्यात हटवणार असलेला टाकाऊ prototype</li>
-<li data-en="…that's about it. CI earns its keep everywhere.">…एवढेच. CI सगळीकडे स्वतःची किंमत वसूल करतो.</li>
+<div class="q avoid"><h4>👎 Think twice when</h4><ul>
+<li>a throwaway prototype you'll delete next week</li>
+<li>…that's about it. CI earns its keep everywhere.</li>
 </ul></div>
 </div>
-<p class="foot" data-en='&lt;a href="lesson-diagrams.html#l03"&gt;Diagram ↗&lt;/a&gt;'><a href="lesson-diagrams.html#l03">आकृती ↗</a></p>
+<p class="foot"><a href="lesson-diagrams.html#l03">Diagram ↗</a></p>
 </section>
 <section class="term" id="gitops" style="--c:#16a34a">
-<h2 data-en="📖 GitOps — lesson 05">📖 GitOps — धडा 05</h2>
-<div class="hist"><b data-en="⏮️ Before GitOps (term coined 2017)">⏮️ GitOps च्या आधी (शब्द 2017 मध्ये तयार झाला)</b>
-<p data-en="Ops knowledge lived in &lt;b&gt;wiki runbooks, shell history and heads&lt;/b&gt;. Clusters were changed
-    imperatively (kubectl by hand, CI push), so &quot;what's running?&quot; and &quot;who changed it?&quot; had no
-    reliable answer — Part 1 of this course is a museum tour of exactly that world.">Ops ज्ञान <b>wiki runbooks, shell इतिहास आणि डोक्यांत</b> राहत असे. Clusters imperatively बदलले जात (हाताने kubectl, CI push), म्हणून "काय चालू आहे?" आणि "कोणी बदलले?" ला विश्वसनीय उत्तर नव्हते — या कोर्सचा भाग 1 म्हणजे नेमक्या त्याच जगाचा संग्रहालय-फेरफटका.</p>
+<h2>📖 GitOps — lesson 05</h2>
+<div class="hist"><b>⏮️ Before GitOps (term coined 2017)</b>
+<p>Ops knowledge lived in <b>wiki runbooks, shell history and heads</b>. Clusters were changed
+    imperatively (kubectl by hand, CI push), so "what's running?" and "who changed it?" had no
+    reliable answer — Part 1 of this course is a museum tour of exactly that world.</p>
 </div>
 <div class="quad">
-<div class="q merit"><h4 data-en="✅ Merits">✅ फायदे</h4><ul>
-<li data-en="git = single source of truth; audit for free">git = सत्याचा एकमेव स्रोत; audit मोफत</li>
-<li data-en="drift detected and reverted continuously">drift सतत शोधला आणि परत फिरवला जातो</li>
-<li data-en="rollback = git revert; DR = re-apply the repo">rollback = git revert; DR = रेपो पुन्हा apply</li>
-<li data-en="changes reviewed like code (PRs)">बदल कोडसारखे review होतात (PRs)</li>
+<div class="q merit"><h4>✅ Merits</h4><ul>
+<li>git = single source of truth; audit for free</li>
+<li>drift detected and reverted continuously</li>
+<li>rollback = git revert; DR = re-apply the repo</li>
+<li>changes reviewed like code (PRs)</li>
 </ul></div>
-<div class="q demerit"><h4 data-en="❌ Demerits">❌ तोटे</h4><ul>
-<li data-en="ceremony: every change rides through git (hotfix latency)">सोपस्कार: प्रत्येक बदल git मधून जातो (hotfix ला उशीर)</li>
-<li data-en="secrets need extra machinery (below)">secrets ना जादा यंत्रणा लागते (खाली)</li>
-<li data-en='"break glass" emergencies need an agreed process'>"काच फोडा" आणीबाणीला ठरलेली प्रक्रिया लागते</li>
-<li data-en="one more mental model for the team">टीमसाठी आणखी एक मानसिक मॉडेल</li>
+<div class="q demerit"><h4>❌ Demerits</h4><ul>
+<li>ceremony: every change rides through git (hotfix latency)</li>
+<li>secrets need extra machinery (below)</li>
+<li>"break glass" emergencies need an agreed process</li>
+<li>one more mental model for the team</li>
 </ul></div>
-<div class="q use"><h4 data-en="👍 Use when">👍 वापरा जेव्हा</h4><ul>
-<li data-en="Kubernetes + more than one env/cluster/team">Kubernetes + एकापेक्षा जास्त env/cluster/टीम</li>
-<li data-en="compliance/audit questions actually get asked">compliance/audit चे प्रश्न खरोखर विचारले जातात</li>
+<div class="q use"><h4>👍 Use when</h4><ul>
+<li>Kubernetes + more than one env/cluster/team</li>
+<li>compliance/audit questions actually get asked</li>
 </ul></div>
-<div class="q avoid"><h4 data-en="👎 Think twice when">👎 दोनदा विचार करा जेव्हा</h4><ul>
-<li data-en="no Kubernetes — GitOps tooling is k8s-shaped">Kubernetes नाही — GitOps साधने k8s-आकाराची आहेत</li>
-<li data-en="solo prototyping where speed beats ceremony">एकट्याचे prototyping जिथे वेग सोपस्कारांपेक्षा महत्त्वाचा</li>
+<div class="q avoid"><h4>👎 Think twice when</h4><ul>
+<li>no Kubernetes — GitOps tooling is k8s-shaped</li>
+<li>solo prototyping where speed beats ceremony</li>
 </ul></div>
 </div>
-<p class="foot" data-en='&lt;a href="lesson-diagrams.html#l05"&gt;Diagram ↗&lt;/a&gt;'><a href="lesson-diagrams.html#l05">आकृती ↗</a></p>
+<p class="foot"><a href="lesson-diagrams.html#l05">Diagram ↗</a></p>
 </section>
 <section class="term" id="argocd" style="--c:#16a34a">
-<h2 data-en="🤖 ArgoCD (the tool) — lessons 06–10">🤖 ArgoCD (साधन) — धडे 06–10</h2>
-<div class="hist"><b data-en="⏮️ Before ArgoCD (2018, CNCF-graduated 2022)">⏮️ ArgoCD च्या आधी (2018, CNCF-पदवीधर 2022)</b>
-<p data-en="GitOps existed as scripts: Jenkins jobs running kubectl-apply on a timer, or early
-    &lt;b&gt;Flux&lt;/b&gt; (the other great GitOps agent — same loop, no UI). Heavyweight deploy platforms
+<h2>🤖 ArgoCD (the tool) — lessons 06–10</h2>
+<div class="hist"><b>⏮️ Before ArgoCD (2018, CNCF-graduated 2022)</b>
+<p>GitOps existed as scripts: Jenkins jobs running kubectl-apply on a timer, or early
+    <b>Flux</b> (the other great GitOps agent — same loop, no UI). Heavyweight deploy platforms
     like Spinnaker did more but cost an ops team to run. ArgoCD won hearts with the visual
-    app-tree UI.">GitOps स्क्रिप्ट म्हणून अस्तित्वात होते: timer वर kubectl-apply चालवणारे Jenkins jobs, किंवा सुरुवातीचे <b>Flux</b> (दुसरा उत्तम GitOps एजंट — तोच लूप, UI नाही). Spinnaker सारखे जड deploy प्लॅटफॉर्म जास्त करत पण चालवायला ops टीम लागे. ArgoCD ने दृश्य app-tree UI ने मने जिंकली.</p>
+    app-tree UI.</p>
 </div>
 <div class="quad">
-<div class="q merit"><h4 data-en="✅ Merits">✅ फायदे</h4><ul>
-<li data-en="the UI: see every app, diff, sync state at a glance">UI: प्रत्येक ॲप, diff, sync स्थिती एका नजरेत</li>
-<li data-en="app-of-apps + multi-cluster from one place">app-of-apps + multi-cluster एकाच जागेवरून</li>
-<li data-en="SSO/RBAC for teams; huge community">टीमसाठी SSO/RBAC; प्रचंड समुदाय</li>
+<div class="q merit"><h4>✅ Merits</h4><ul>
+<li>the UI: see every app, diff, sync state at a glance</li>
+<li>app-of-apps + multi-cluster from one place</li>
+<li>SSO/RBAC for teams; huge community</li>
 </ul></div>
-<div class="q demerit"><h4 data-en="❌ Demerits">❌ तोटे</h4><ul>
-<li data-en="one more controller to run, upgrade and secure">चालवायला, अपग्रेड करायला आणि सुरक्षित ठेवायला आणखी एक controller</li>
-<li data-en="k8s-only — it deploys nothing else">फक्त k8s — दुसरे काहीही deploy करत नाही</li>
-<li data-en="misconfigured UI perms can bypass git review">चुकीच्या UI परवानग्या git review टाळू शकतात</li>
+<div class="q demerit"><h4>❌ Demerits</h4><ul>
+<li>one more controller to run, upgrade and secure</li>
+<li>k8s-only — it deploys nothing else</li>
+<li>misconfigured UI perms can bypass git review</li>
 </ul></div>
-<div class="q use"><h4 data-en="👍 Use when">👍 वापरा जेव्हा</h4><ul>
-<li data-en="several apps/envs/clusters, humans want visibility">अनेक ॲप्स/envs/clusters, माणसांना दृश्यता हवी</li>
-<li data-en="teams need RBAC'd, self-service deploys">टीमना RBAC असलेले, self-service deploy हवेत</li>
+<div class="q use"><h4>👍 Use when</h4><ul>
+<li>several apps/envs/clusters, humans want visibility</li>
+<li>teams need RBAC'd, self-service deploys</li>
 </ul></div>
-<div class="q avoid"><h4 data-en="👎 Think twice when">👎 दोनदा विचार करा जेव्हा</h4><ul>
-<li data-en="one app, one cluster → Flux (lighter) or CI push is fine">एक ॲप, एक cluster → Flux (हलके) किंवा CI push पुरते</li>
-<li data-en="non-k8s targets (Lambda, VMs) → different tools">k8s नसलेली लक्ष्ये (Lambda, VMs) → वेगळी साधने</li>
+<div class="q avoid"><h4>👎 Think twice when</h4><ul>
+<li>one app, one cluster → Flux (lighter) or CI push is fine</li>
+<li>non-k8s targets (Lambda, VMs) → different tools</li>
 </ul></div>
 </div>
-<p class="foot" data-en='&lt;a href="lesson-diagrams.html#l07"&gt;Diagrams ↗&lt;/a&gt;'><a href="lesson-diagrams.html#l07">आकृत्या ↗</a></p>
+<p class="foot"><a href="lesson-diagrams.html#l07">Diagrams ↗</a></p>
 </section>
 <section class="term" id="templates" style="--c:#16a34a">
-<h2 data-en="📚 Helm &amp;amp; Kustomize — lesson 11">📚 Helm &amp; Kustomize — धडा 11</h2>
-<div class="hist"><b data-en="⏮️ Before templating">⏮️ templating च्या आधी</b>
-<p data-en="&lt;b&gt;Copy-paste YAML per environment&lt;/b&gt; — dev/staging/prod folders that started identical and
+<h2>📚 Helm &amp; Kustomize — lesson 11</h2>
+<div class="hist"><b>⏮️ Before templating</b>
+<p><b>Copy-paste YAML per environment</b> — dev/staging/prod folders that started identical and
     drifted apart typo by typo (copy-paste drift is lesson 02's disease wearing YAML). Or worse:
-    sed scripts in CI rewriting manifests nobody could preview."><b>प्रत्येक environment साठी copy-paste YAML</b> — dev/staging/prod फोल्डर जे एकसारखे सुरू झाले आणि typo-typo ने वेगळे होत गेले (copy-paste drift म्हणजे YAML घातलेला धडा 02 चा रोग). किंवा वाईट: CI मध्ये manifests पुन्हा लिहिणाऱ्या sed स्क्रिप्ट ज्यांचे preview कोणालाच करता येत नसे.</p>
+    sed scripts in CI rewriting manifests nobody could preview.</p>
 </div>
 <div class="quad">
-<div class="q merit"><h4 data-en="✅ Merits">✅ फायदे</h4><ul>
-<li data-en="one source of truth + small per-env diffs">सत्याचा एक स्रोत + प्रत्येक env साठी छोटे diff</li>
-<li data-en="the difference between envs is readable in git">envs मधला फरक git मध्ये वाचता येतो</li>
-<li data-en="ArgoCD renders both natively">ArgoCD दोन्ही थेट render करतो</li>
+<div class="q merit"><h4>✅ Merits</h4><ul>
+<li>one source of truth + small per-env diffs</li>
+<li>the difference between envs is readable in git</li>
+<li>ArgoCD renders both natively</li>
 </ul></div>
-<div class="q demerit"><h4 data-en="❌ Demerits">❌ तोटे</h4><ul>
-<li data-en="Helm templating can become {{ unreadable }} soup">Helm templating {{ न वाचता येणारे }} सूप बनू शकते</li>
-<li data-en="Kustomize gets verbose for big variance">मोठ्या फरकांसाठी Kustomize शब्दबंबाळ होते</li>
-<li data-en="you debug the RENDERED output, not the source">तुम्ही source नव्हे, render झालेले output debug करता</li>
+<div class="q demerit"><h4>❌ Demerits</h4><ul>
+<li>Helm templating can become {{ unreadable }} soup</li>
+<li>Kustomize gets verbose for big variance</li>
+<li>you debug the RENDERED output, not the source</li>
 </ul></div>
-<div class="q use"><h4 data-en="👍 Use when">👍 वापरा जेव्हा</h4><ul>
-<li data-en="2+ environments of the same app (the classic case)">एकाच ॲपची 2+ environments (क्लासिक प्रकरण)</li>
-<li data-en="installing third-party software (Helm charts)">तृतीय-पक्ष सॉफ्टवेअर install करणे (Helm charts)</li>
+<div class="q use"><h4>👍 Use when</h4><ul>
+<li>2+ environments of the same app (the classic case)</li>
+<li>installing third-party software (Helm charts)</li>
 </ul></div>
-<div class="q avoid"><h4 data-en="👎 Think twice when">👎 दोनदा विचार करा जेव्हा</h4><ul>
-<li data-en="one env, a handful of files — plain YAML wins">एक env, मूठभर फाइल्स — साधे YAML जिंकते</li>
-<li data-en="templating for hypothetical future envs (YAGNI)">काल्पनिक भविष्यातील envs साठी templating (YAGNI)</li>
+<div class="q avoid"><h4>👎 Think twice when</h4><ul>
+<li>one env, a handful of files — plain YAML wins</li>
+<li>templating for hypothetical future envs (YAGNI)</li>
 </ul></div>
 </div>
-<p class="foot" data-en='&lt;a href="lesson-diagrams.html#l11"&gt;Diagram ↗&lt;/a&gt;'><a href="lesson-diagrams.html#l11">आकृती ↗</a></p>
+<p class="foot"><a href="lesson-diagrams.html#l11">Diagram ↗</a></p>
 </section>
 <section class="term" id="secrets" style="--c:#16a34a">
-<h2 data-en="🔐 GitOps secrets: Sealed Secrets vs External Secrets — lesson 12">🔐 GitOps secrets: Sealed Secrets विरुद्ध External Secrets — धडा 12</h2>
-<div class="hist"><b data-en="⏮️ Before proper GitOps secrets">⏮️ योग्य GitOps secrets च्या आधी</b>
-<p data-en="Either secrets were &lt;b&gt;pasted into git&lt;/b&gt; (published forever — git never forgets), or they
-    lived &lt;b&gt;outside GitOps entirely&lt;/b&gt; (hand-applied Secret files the robot couldn't manage —
-    drift by design). Both ended in incident reports.">एकतर secrets <b>git मध्ये चिकटवले जात</b> (कायमचे प्रकाशित — git कधीच विसरत नाही), किंवा ते <b>GitOps च्या पूर्ण बाहेर</b> राहत (हाताने apply केलेल्या Secret फाइल्स ज्या रोबोट सांभाळू शकत नसे — मुद्दाम drift). दोन्ही incident reports मध्ये संपत.</p>
+<h2>🔐 GitOps secrets: Sealed Secrets vs External Secrets — lesson 12</h2>
+<div class="hist"><b>⏮️ Before proper GitOps secrets</b>
+<p>Either secrets were <b>pasted into git</b> (published forever — git never forgets), or they
+    lived <b>outside GitOps entirely</b> (hand-applied Secret files the robot couldn't manage —
+    drift by design). Both ended in incident reports.</p>
 </div>
 <div class="quad">
-<div class="q merit"><h4 data-en="✅ Sealed Secrets shine">✅ Sealed Secrets चमकतात</h4><ul>
-<li data-en="self-contained: just one controller, no vault needed">स्वयंपूर्ण: फक्त एक controller, vault नको</li>
-<li data-en="encrypted blob lives IN the repo — pure GitOps">encrypted blob रेपोच्या आत राहतो — शुद्ध GitOps</li>
-<li data-en="simple mental model (locked box in the book)">सोपे मानसिक मॉडेल (वहीतील कुलूपबंद पेटी)</li>
+<div class="q merit"><h4>✅ Sealed Secrets shine</h4><ul>
+<li>self-contained: just one controller, no vault needed</li>
+<li>encrypted blob lives IN the repo — pure GitOps</li>
+<li>simple mental model (locked box in the book)</li>
 </ul></div>
-<div class="q demerit"><h4 data-en="❌ Their limits">❌ त्यांच्या मर्यादा</h4><ul>
-<li data-en="rotation = re-seal and re-commit every secret">rotation = प्रत्येक secret पुन्हा seal आणि पुन्हा commit</li>
-<li data-en="cluster rebuilt = new key = re-seal everything">cluster पुन्हा बांधला = नवी किल्ली = सगळे पुन्हा seal</li>
-<li data-en="no central place to see/rotate all secrets">सगळे secrets पाहायला/फिरवायला केंद्रीय जागा नाही</li>
+<div class="q demerit"><h4>❌ Their limits</h4><ul>
+<li>rotation = re-seal and re-commit every secret</li>
+<li>cluster rebuilt = new key = re-seal everything</li>
+<li>no central place to see/rotate all secrets</li>
 </ul></div>
-<div class="q use"><h4 data-en="👍 External Secrets shine">👍 External Secrets चमकतात</h4><ul>
-<li data-en="secrets live in AWS SM / Vault — rotation built in">secrets AWS SM / Vault मध्ये राहतात — rotation अंगभूत</li>
-<li data-en="one vault serves many clusters and apps">एक vault अनेक clusters आणि ॲप्सना सेवा देतो</li>
-<li data-en="git holds only harmless pointers">git मध्ये फक्त निरुपद्रवी pointers</li>
+<div class="q use"><h4>👍 External Secrets shine</h4><ul>
+<li>secrets live in AWS SM / Vault — rotation built in</li>
+<li>one vault serves many clusters and apps</li>
+<li>git holds only harmless pointers</li>
 </ul></div>
-<div class="q avoid"><h4 data-en="❌ Their limits">❌ त्यांच्या मर्यादा</h4><ul>
-<li data-en="depends on an external store + one more operator">बाह्य साठा + आणखी एक operator यावर अवलंबून</li>
-<li data-en="the vault becomes critical infrastructure">vault हे critical infrastructure बनते</li>
-<li data-en='slightly less "everything is in the repo"'>"सगळे रेपोमध्ये आहे" पेक्षा थोडे कमी</li>
+<div class="q avoid"><h4>❌ Their limits</h4><ul>
+<li>depends on an external store + one more operator</li>
+<li>the vault becomes critical infrastructure</li>
+<li>slightly less "everything is in the repo"</li>
 </ul></div>
 </div>
-<p class="foot" data-en='Rule of thumb: small/self-hosted → Sealed Secrets · cloud with a secret manager → External Secrets. &lt;a href="lesson-diagrams.html#l12"&gt;Diagram ↗&lt;/a&gt;'>अंगठ्याचा नियम: छोटे/स्वतः होस्ट केलेले → Sealed Secrets · secret manager असलेले क्लाउड → External Secrets. <a href="lesson-diagrams.html#l12">आकृती ↗</a></p>
+<p class="foot">Rule of thumb: small/self-hosted → Sealed Secrets · cloud with a secret manager → External Secrets. <a href="lesson-diagrams.html#l12">Diagram ↗</a></p>
 </section>
-<footer data-en='
-  Learn ArgoCD School · &lt;a href="index.html"&gt;Course home&lt;/a&gt; ·
-  &lt;a href="lesson-diagrams.html"&gt;Lesson diagrams&lt;/a&gt; ·
-  &lt;a href="https://github.com/BaluRaut/learn-argocd-school"&gt;github.com/BaluRaut/learn-argocd-school&lt;/a&gt;
+<footer>
+  Learn ArgoCD School · <a href="index.html">Course home</a> ·
+  <a href="lesson-diagrams.html">Lesson diagrams</a> ·
+  <a href="https://github.com/BaluRaut/learn-argocd-school">github.com/BaluRaut/learn-argocd-school</a>
  ·
-  &lt;a href="https://baluraut.github.io/school/"&gt;🏫 all schools&lt;/a&gt;
+  <a href="https://baluraut.github.io/school/">🏫 all schools</a>
  ·
-  &lt;a href="https://github.com/BaluRaut/learn-argocd-school/issues"&gt;🐛 found a mistake?&lt;/a&gt;
-'>Learn ArgoCD School · <a href="index.html">कोर्स मुख्य पान</a> · <a href="lesson-diagrams.html">धड्यांच्या आकृत्या</a> · <a href="https://github.com/BaluRaut/learn-argocd-school">github.com/BaluRaut/learn-argocd-school</a> · <a href="https://baluraut.github.io/school/">🏫 सर्व शाळा</a> · <a href="https://github.com/BaluRaut/learn-argocd-school/issues">🐛 चूक सापडली?</a></footer>
+  <a href="https://github.com/BaluRaut/learn-argocd-school/issues">🐛 found a mistake?</a>
+</footer>
 </div>
-
-<script id="i18n-js">
-function schoolSetLang(l){
-  try{localStorage.setItem('school-lang',l)}catch(e){}
-  document.documentElement.setAttribute('lang',l);
-  document.querySelectorAll('[data-en]').forEach(function(el){
-    if(!el.hasAttribute('data-mr')) el.setAttribute('data-mr', el.innerHTML);
-    el.innerHTML = (l==='en') ? el.getAttribute('data-en') : el.getAttribute('data-mr');
-  });
-  document.querySelectorAll('[data-en-ph]').forEach(function(el){
-    if(!el.hasAttribute('data-mr-ph')) el.setAttribute('data-mr-ph', el.getAttribute('placeholder'));
-    el.setAttribute('placeholder', (l==='en') ? el.getAttribute('data-en-ph') : el.getAttribute('data-mr-ph'));
-  });
-  var p=document.getElementById('lang-pick'); if(p) p.value=l;
-}
-(function(){ var l='mr'; try{ l=localStorage.getItem('school-lang')||'mr'; }catch(e){}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){schoolSetLang(l)}); else schoolSetLang(l); })();
-</script></body>
+</body>
 </html>
