@@ -44,7 +44,7 @@ flowchart LR
 - **CI** (Continuous Integration): every push is automatically tested & built.
 - **CD** (Continuous Delivery/Deployment): the built artifact is automatically
   released. Together: nobody deploys by hand anymore.
-- **Push model**: the pipeline needs **deployment credentials** to reach the cluster from outside — a kubeconfig stored as a CI secret in the simplest setups, or short-lived credentials obtained via OIDC (the [Docker school's lesson 12](https://github.com/BaluRaut/learn-docker-school/blob/lesson-12-ci-to-cloud/lessons/12-ci-to-cloud/README.md) shows the OIDC pattern for ECR; the same idea works for EKS). Either way, an outside system pushes changes in.
+- **Push model**: the pipeline needs **deployment credentials** to reach the cluster from outside — a kubeconfig stored as a CI secret in the simplest setups, or short-lived credentials obtained via OIDC (the [CI/CD school](https://baluraut.github.io/learn-cicd-school/) teaches OIDC with no stored keys; the [Docker school's lesson 12](https://github.com/BaluRaut/learn-docker-school/blob/lesson-12-ci-to-cloud/lessons/12-ci-to-cloud/README.md) shows it for ECR, and the same idea works for EKS). Either way, an outside system pushes changes in.
 - This is exactly what the
   [Kubernetes course's CircleCI pipeline](https://github.com/BaluRaut/learn-kubernetes-school/blob/main/.circleci/config.yml)
   does: test → build → push to ECR → manual approval → `kubectl apply`.
@@ -80,7 +80,7 @@ jobs:
 Note what just happened: **the cluster's key now lives outside the cluster**,
 in the CI system's secret store. Remember that.
 
-> 🪪 **Stored key vs OIDC.** This example stores a kubeconfig as a CI secret — the simplest and least safe shape. The better shape is what the Docker school's lesson 12 does for ECR: the job proves who it is via **OIDC** and receives a **short-lived** credential (for EKS: `aws eks update-kubeconfig` after `role-to-assume`). No long-lived key sits in CI — but the pipeline still needs *some* way in from outside, and lesson 04 is about what that means.
+> 🪪 **Stored key vs OIDC.** This example stores a kubeconfig as a CI secret — the simplest and least safe shape. The better shape is what the [CI/CD school](https://baluraut.github.io/learn-cicd-school/) teaches — and the Docker school's lesson 12 does for ECR: the job proves who it is via **OIDC** and receives a **short-lived** credential (for EKS: `aws eks update-kubeconfig` after `role-to-assume`). No long-lived key sits in CI — but the pipeline still needs *some* way in from outside, and lesson 04 is about what that means.
 
 ## 🧪 Try it (simulate the robot locally)
 
@@ -104,7 +104,7 @@ Nothing was installed. If you created a real workflow on a fork, delete the stor
 
 ## ⚠️ Common mistakes
 
-- pasting a cluster-admin kubeconfig into CI secrets and calling it done — scope it, or better, obtain short-lived credentials via OIDC ([Docker school L12](https://github.com/BaluRaut/learn-docker-school/blob/lesson-12-ci-to-cloud/lessons/12-ci-to-cloud/README.md))
+- pasting a cluster-admin kubeconfig into CI secrets and calling it done — scope it, or better, obtain short-lived credentials via OIDC ([CI/CD school](https://baluraut.github.io/learn-cicd-school/), [Docker school L12](https://github.com/BaluRaut/learn-docker-school/blob/lesson-12-ci-to-cloud/lessons/12-ci-to-cloud/README.md))
 - letting the deploy step run even when tests fail (job ordering / `needs:`)
 - deploying `:latest` — the pipeline can no longer tell you what actually shipped
 
