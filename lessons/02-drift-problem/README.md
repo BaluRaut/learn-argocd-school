@@ -83,6 +83,22 @@ kubectl apply -f k8s/
 kubectl -n gitops-school get deploy    # replicas back to 2 — your hotfix is GONE, silently
 ```
 
+## ✅ Verify — what you should see
+
+After the scale + edit, `kubectl diff -f k8s/` prints a non-empty diff (replicas 5 vs 2, plus your label). After the innocent re-apply, `kubectl -n gitops-school get deploy hello-school` is back to `2/2` and the label is gone — and `kubectl diff` is now empty, as if the hotfix never existed.
+
+## 🧹 Clean up
+
+`kubectl apply -f k8s/` puts the room back to the file. Nothing else to remove.
+
+## ⚠️ Common mistakes
+
+- running `kubectl diff` only *after* the apply and concluding there was never any drift
+- thinking drift needs a villain — one dashboard click during an incident is enough
+- hotfixing by hand and *planning* to write it back to git later (later never comes — that is the lesson)
+
+> 🏭 **Why this matters in production:** drift is the number-one reason "just redeploy from the repo" breaks something during an incident. Teams without a reconcile loop should at least run `kubectl diff` from CI on a schedule, so drift is visible even if not fixed.
+
 ## ⏭️ Next
 
 First fix: stop humans from deploying at all. Enter the **courier robot** —
