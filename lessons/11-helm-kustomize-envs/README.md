@@ -78,6 +78,8 @@ Copy-paste is how config rots. Templates + tiny per-env diffs keep the
 app-of-apps means disaster recovery for an entire platform is: install
 ArgoCD, apply one file, wait. ☕
 
+> ✅ **Gap 3 closed.** Ten clusters no longer mean ten keys in CI: each cluster runs its own robot pulling the same book (or one robot manages many — lesson 06's trade-off), and app-of-apps means a new cluster bootstraps from one file, not one more pipeline.
+
 ## 🔧 How (a Kustomize sketch of THIS repo)
 
 ```
@@ -103,6 +105,23 @@ printf 'resources: ["../base"]\nreplicas: [{name: hello-school, count: 5}]\n' > 
 kubectl kustomize /tmp/kdemo/base | grep replicas     # → 2 (the recipe)
 kubectl kustomize /tmp/kdemo/prod | grep replicas     # → 5 (base + one fill-in line!)
 ```
+
+## ✅ Verify — what you should see
+
+`kubectl kustomize /tmp/kdemo/base | grep replicas` → `replicas: 2`; the same for `/prod` → `replicas: 5`. The prod overlay is two lines; everything else is inherited from the recipe.
+
+## 🧹 Clean up
+
+`rm -rf /tmp/kdemo`. Nothing was applied to the cluster.
+
+## ⚠️ Common mistakes
+
+- copy-pasting the manifest folder per environment "for now" — the copies drift from each other within a month
+- one git *branch* per environment — promotion becomes a merge-conflict machine; use folders/overlays on one branch
+- app-of-apps with `prune: true` on the parent before every child is committed — an uncommitted child gets deleted
+- Helm values files with secrets in them (lesson 12)
+
+> 🏭 **Why this matters in production:** real platforms are app-of-apps or ApplicationSets over Kustomize overlays (or Helm charts with per-environment values), promoted by PRs that change one tag. The whole cluster's desired state is then a `git clone` away — the disaster-recovery plan is `kubectl apply -f root-app.yaml`.
 
 ## ⏭️ Next
 

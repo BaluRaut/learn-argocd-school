@@ -86,6 +86,22 @@ argocd login localhost:8080 --username admin --insecure
 #    bored, and waiting for lesson 07. 🤖💤
 ```
 
+## ✅ Verify — what you should see
+
+`kubectl -n argocd get pods` → everything `Running`: `argocd-server`, `argocd-repo-server`, `argocd-application-controller-0`, plus redis, dex and notifications. The UI at https://localhost:8080 accepts `admin` + the initial password and shows **zero** Applications.
+
+## 🧹 Clean up
+
+Keep ArgoCD installed for lessons 07–12. To remove it completely later: delete your Applications first (lesson 07's clean-up), then `kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml && kubectl delete namespace argocd`. On a cloud cluster this stops nothing that costs money — nodes and load balancers bill until the cluster itself is destroyed.
+
+## ⚠️ Common mistakes
+
+- leaving the port-forward running in the background (`jobs`, `kill %1`) and wondering why :8080 is busy next time
+- rotating the admin password and losing it — `argocd-initial-admin-secret` is meant to be deleted after the first login
+- installing into a real cluster by accident — `kubectl config current-context` first
+
+> 🏭 **Why this matters in production:** real installs use the Helm chart or the operator, SSO instead of the admin user, HA mode (sharded controllers, redis HA), and keep ArgoCD *itself* managed by ArgoCD (app-of-apps, lesson 11). The one-file install is for learning.
+
 ## ⏭️ Next
 
 Hand the robot its first plan page: the **Application** that deploys this

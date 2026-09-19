@@ -22,9 +22,10 @@ what Monday's page said (that's `git revert` — it doesn't erase Wednesday's
 mistake, it adds a page "undo Wednesday"). The caretaker reads it and calmly
 repaints. Ten seconds of human work.
 
-And the school's logbook? You never wrote one — but the book's page history
-**is** the logbook: every change, who made it, when, and why (the commit
-message). The auditor 🕵️ reads git and goes home early.
+And the school's logbook? The book's page history is the record of every
+*request*: who changed which page, when, and why (the commit message). The
+caretaker keeps a second, shorter note of what it *actually did* and when —
+ArgoCD's sync history. The auditor 🕵️ reads both and goes home early.
 
 ## 🗺️ Diagram
 
@@ -35,7 +36,7 @@ flowchart LR
     C -->|"3 robot syncs C<br/>cluster back on v1"| argo["🤖 ArgoCD"]
     B -.->|"1 bad version ships<br/>via git, at least!"| B
     C -.->|"2 git revert - 10 seconds"| C
-    argo -.->|"4 git log = deploy log:<br/>who, what, when 🧾"| argo
+    argo -.->|"4 git = desired-state history 🧾<br/>ArgoCD history = what actually synced"| argo
 ```
 
 ## ❓ What
@@ -48,8 +49,12 @@ flowchart LR
   previous revision) — great in a fire drill. But note: rolling back via the
   UI while `automated` sync is on gets overridden by the book again — the
   durable rollback is the git revert. **The book must change.**
-- Audit: `git log -p k8s/` answers who/what/when; the PR answers *why*.
-  Compare that with reconstructing a timeline from CI logs + kubectl events.
+- Two histories, not one. **Git history = desired-state change history**
+  (`git log -p k8s/` — who/what/when; the PR says *why*). **ArgoCD's sync
+  history = what was actually synced** (`argocd app history hello-school`,
+  or the History tab): a sync can fail, wait for a manual nod, or land minutes
+  later, and git knows nothing about that. Together they replace
+  reconstructing a timeline from CI logs + kubectl events.
 
 ## 🤔 Why this beats pipeline rollbacks
 
@@ -58,6 +63,8 @@ hope they're still valid). A GitOps rollback is a *state declaration*:
 "desired = what it was". No pipeline re-run, no stale parameters, no
 "deploy job is broken and it's also the rollback tool" single point of
 failure. And it works identically across 1 or 50 clusters.
+
+> ✅ **Gap 4 closed.** "What's in Room 3B right now?" is no longer answered by a mailroom log of what was *sent*: the book is the live truth (Synced ✅ means room == page), and the sync history says when each page was actually applied.
 
 ## 🔧 How (in this repo)
 
@@ -83,8 +90,26 @@ git revert --no-edit HEAD && git push
 kubectl -n gitops-school get pods -w          # ...and it calmly walks back. 🎉
 
 # 3) read your free audit log:
-git log --oneline -- k8s/                     # every deploy, forever
+git log --oneline -- k8s/                     # every desired-state change, forever
+argocd app history hello-school 2>/dev/null || echo "or: UI → hello-school → History"   # what actually synced
 ```
+
+## ✅ Verify — what you should see
+
+After the bad commit: `kubectl -n gitops-school get deploy hello-school -o jsonpath='{.spec.template.spec.containers[0].image}'` shows the new tag within ~3 minutes. After `git revert` + push: the old tag again, through a normal rolling update. `argocd app history hello-school` (or the History tab) lists both syncs with their git SHAs — that is the record of what actually ran.
+
+## 🧹 Clean up
+
+Your fork now carries two extra commits — the change and its revert. That *is* the audit trail; keep it. Nothing in the cluster to clean.
+
+## ⚠️ Common mistakes
+
+- rolling back with the UI's Rollback button while automated sync is on — the book re-applies the bad commit within minutes; the durable rollback is the revert
+- `git reset --hard` + force-push to "undo" — you destroy the history that made the rollback trustworthy
+- pinning `:latest` — a revert changes nothing because the tag did not change
+- reading git history as proof that something *ran* — sync history says what actually synced, and when
+
+> 🏭 **Why this matters in production:** a GitOps rollback is a PR like any other, which is exactly why it is calm: same review, same checks, same audit. Keep the image tag in a small separate file (or a values file) so a revert touches one line.
 
 ## ⏭️ Next
 
