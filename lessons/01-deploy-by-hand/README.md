@@ -80,6 +80,25 @@ kubectl -n gitops-school get deploy hello-school -o jsonpath='{.spec.template.sp
 history | grep "kubectl apply" | tail -3   # ← this is your entire audit trail 😬
 ```
 
+## ✅ Verify — what you should see
+
+```bash
+kubectl -n gitops-school get deploy,svc,pods
+```
+→ `hello-school` is `2/2` READY, one ClusterIP Service, two `Running` pods. Then `kubectl -n gitops-school port-forward deploy/hello-school 8080:80` and `curl localhost:8080` prints the hello page with the pod's name in it.
+
+## 🧹 Clean up
+
+Nothing to remove yet — lessons 02–04 reuse this deployment. Stopping here? `kubectl delete namespace gitops-school`.
+
+## ⚠️ Common mistakes
+
+- applying to the wrong cluster — `kubectl config current-context` first; the whole course assumes a local cluster
+- forgetting `-n gitops-school` and concluding nothing is running
+- treating this lesson as "the wrong way" — it is the baseline every later lesson is measured against
+
+> 🏭 **Why this matters in production:** hand deploys still happen — during incidents, by the one person who knows the route. Every later lesson exists to make that person unnecessary; until then, at least keep the route written down as a runbook.
+
 ## ⏭️ Next
 
 Leave the app running — lesson 02 is going to vandalize it a little, to show

@@ -61,6 +61,8 @@ simply false: something watches every room, every few minutes, forever, and
 its idea of "correct" is the reviewed, versioned book. Incidents shrink from
 "three months of mystery edits" to "the diff ArgoCD showed at 15:00:30".
 
+> ✅ **Gap 1 closed.** Drift is detected within one refresh (~3 minutes, or seconds with a webhook) and, with selfHeal, reverted — the room can no longer quietly disagree with the book.
+
 ## 🔧 How (nothing new to configure!)
 
 You already have it: `selfHeal: true` in
@@ -86,6 +88,22 @@ kubectl -n gitops-school get deploy hello-school -o jsonpath='{.spec.template.me
 #   (point your Application's repoURL at your fork first)
 # → within ~3 min: 3 pods, no fight, and git shows who wanted 3 and why. 🎉
 ```
+
+## ✅ Verify — what you should see
+
+Round 1: `kubectl -n gitops-school get pods -w` shows three extra pods appear and then go `Terminating` within moments (up to a few minutes without a webhook). Round 2: the `hacked` label is gone on the second check. `kubectl -n argocd get application hello-school` never *stays* `OutOfSync`. Round 3 (your fork): 3 pods, and `git log` shows who wanted them.
+
+## 🧹 Clean up
+
+Nothing to remove — the robot already cleaned up after you. Round 3 lives in *your* fork's git history, which is the point.
+
+## ⚠️ Common mistakes
+
+- concluding selfHeal is broken because the revert took 2–3 minutes — that is the refresh interval; a webhook makes it seconds
+- fighting the HPA: if `replicas` is owned by an autoscaler, ignore that field (`spec.ignoreDifferences`) or drop `replicas` from the manifest
+- using selfHeal as a reason to stop reviewing PRs — the book wins, so a bad book wins too
+
+> 🏭 **Why this matters in production:** selfHeal turns "somebody changed prod by hand" from a mystery into a diff with a timestamp. Pair it with RBAC (Kubernetes school L17) that makes hand edits rare, and alert on repeated OutOfSync → Synced flips — they mean someone is fighting the robot.
 
 ## ⏭️ Next
 
