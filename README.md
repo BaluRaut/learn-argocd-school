@@ -13,6 +13,7 @@ every lesson as a numbered box-and-arrow diagram. Reference pages: [the four gap
 > deployments, services, rollouts). If those words are comfortable, you're ready.
 > Any local cluster (Docker Desktop, minikube, kind, k3d) runs all 12 lessons — no cloud needed.
 > One-command check: `bash scripts/check-setup.sh`.
+> Optional but useful: the [CI/CD school](https://baluraut.github.io/learn-cicd-school/) — the courier robot's own course; lessons 03–04 here lean on its OIDC lesson.
 
 ## 🗺️ The big picture — one diagram, both worlds
 
