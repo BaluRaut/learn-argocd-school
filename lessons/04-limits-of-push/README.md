@@ -20,8 +20,7 @@ one minute after it delivered and drove away:
    unnoticed for days.
 2. **The courier needs a way in from outside.** 🔑 To deliver, the courier
    must obtain deployment credentials — a copied key kept in its van at
-   worst (a kubeconfig stored in CI), a short-lived badge at best (OIDC, as
-   in the Docker school's lesson 12). Short-lived is much better — but a
+   worst (a kubeconfig stored in CI), a short-lived badge at best (OIDC, as the [CI/CD school](https://baluraut.github.io/learn-cicd-school/) teaches). Short-lived is much better — but a
    door that opens from the street still has to exist, be scoped, and be
    watched.
 3. **Ten schools? Ten keys in the van.** 🏫🏫🏫 Every new cluster = another
