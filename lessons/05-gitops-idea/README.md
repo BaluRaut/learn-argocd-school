@@ -68,9 +68,7 @@ sound familiar: it's **exactly** how a Deployment treats "replicas: 2"
 ## 🤔 Why
 
 Because it converts the four push-model gaps into non-problems:
-drift → reverted continuously · keys in CI → agent pulls from inside ·
-ten clusters → ten agents, each pulling the same repo · "what's running?" →
-`git log`. Deploys stop being *events somebody performs* and become
+drift → reverted continuously · deployment credentials from outside → the agent pulls from inside · ten clusters → ten agents, each pulling the same repo · "what's running?" → the book, plus the agent's own sync history. Deploys stop being *events somebody performs* and become
 *facts somebody committed*.
 
 ## 🔧 How (in this repo)
@@ -89,8 +87,24 @@ add the agent (rules 3–4): ArgoCD + one
 #   Q2: prod is on fire, revert last night's change → ?
 #   Q3: auditor asks who changed the memory limit   → ?
 # answers: book (git commit), book (git revert), book (git log -p k8s/)
-git log --oneline -- k8s/    # ← the book's history: your future deploy log
+git log --oneline -- k8s/    # ← the book's history: your future desired-state history
 ```
+
+## ✅ Verify — what you should see
+
+Paper exercise: all three answers are "the book". `git log --oneline -- k8s/` prints the commits that touched the manifests — that list is the shape of your future desired-state history.
+
+## 🧹 Clean up
+
+Nothing to clean — no cluster changes in this lesson.
+
+## ⚠️ Common mistakes
+
+- equating GitOps with "we keep YAML in git" — rules 1–2 alone are version control; the agent (rules 3–4) is what closes the gaps
+- expecting the book to know what *actually* happened — it records intent; the agent's sync history records action (lesson 10)
+- putting secrets in the book because "everything must be in git" (lesson 12)
+
+> 🏭 **Why this matters in production:** GitOps changes the on-call question from "who deployed what?" to "what does git say, and is the app Synced?" — but only if *every* change goes through the book. One `kubectl edit` in prod and you are back in lesson 02, until selfHeal says otherwise.
 
 ## ⏭️ Next
 

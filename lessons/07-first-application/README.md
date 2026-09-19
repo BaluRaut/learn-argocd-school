@@ -61,6 +61,8 @@ This single file replaces: your `kubectl apply` ritual, the pipeline's
 deploy job, the "what's deployed?" spreadsheet, and the 3 AM "is prod what's
 in git?" doubt. One page → the robot owns that room forever.
 
+> ✅ **Gap 2 closed.** Nothing outside the cluster holds deployment credentials any more: the robot pulls the book from inside, using only its library card (read access to git). Your CI can lose its kubeconfig entirely.
+
 ## 🔧 How (the file, annotated)
 
 ```yaml
@@ -94,6 +96,23 @@ kubectl -n gitops-school get all                     # the room, built by the ro
 kubectl -n gitops-school delete deployment hello-school
 kubectl -n gitops-school get deploy -w               # ...it comes BACK. (lesson 08 tells you why)
 ```
+
+## ✅ Verify — what you should see
+
+`kubectl -n argocd get application hello-school` → `SYNC STATUS: Synced`, `HEALTH STATUS: Healthy` within a minute or two. It passes through `OutOfSync` / `Progressing` first — that transition *is* the lesson. `kubectl -n gitops-school get all` shows the namespace, Deployment, Service and two pods the robot built; in the UI the tile is green with the tree Application → Deployment → ReplicaSet → Pods.
+
+## 🧹 Clean up
+
+Keep the Application for lessons 08–12. Removing it later: `kubectl -n argocd delete application hello-school` leaves the deployed resources in place unless the Application carries the `resources-finalizer.argocd.argoproj.io` finalizer (`argocd app delete hello-school --cascade` adds it). Then `kubectl delete namespace gitops-school` for anything left.
+
+## ⚠️ Common mistakes
+
+- `path:` with a typo or a trailing slash → `ComparisonError` — check the tile's error text first
+- `CreateNamespace=true` missing → the first sync fails because the namespace does not exist
+- expecting an instant sync after a push — the default poll is ~3 minutes; click Refresh, or add a webhook
+- editing the app's resources by hand and being surprised (lesson 08 explains selfHeal)
+
+> 🏭 **Why this matters in production:** the Application is just YAML, so it lives in git too (app-of-apps, lesson 11) — nobody `kubectl apply`s Applications by hand either. Private repos need a repo credential (deploy key or GitHub App) stored *in the cluster*, not in CI.
 
 ## ⏭️ Next
 

@@ -30,8 +30,10 @@ gone from the room.
 robot move them back? Off = it just hangs the yellow sign. On = chairs go
 back within minutes, every time.
 
-Start with everything gentle while learning; production earns the strict
-setting: **automated + prune + selfHeal** — the book rules, completely.
+Start with everything gentle while learning. In production, turn on
+**automated**, then **selfHeal**, then **prune** — deliberately, one dial at a
+time, with safeguards (reviewed PRs, CI validation, a backup you have tested).
+Prune in particular can delete real resources, so it earns its place last.
 
 ## 🗺️ Diagram
 
@@ -65,6 +67,12 @@ syncPolicy:
   (waves/hooks) and for ignoring specific diffs (e.g. a replica count that
   an HPA owns — you'd ignore that field). Know they exist; don't start there.
 
+- **When NOT to automate yet:** the repo has no review or CI validation; the
+  app owns state you cannot recreate (prune territory — a PVC removed from git
+  is data gone); an HPA or operator writes fields you have not told ArgoCD to
+  ignore (selfHeal would fight it); or you are still learning what OutOfSync
+  looks like. Manual sync is a feature, not a failure.
+
 ## 🤔 Why not always strictest?
 
 Because strictness transfers power from humans to the book — which is only
@@ -91,6 +99,23 @@ argocd app sync hello-school 2>/dev/null || echo "or click Sync in the UI"
 kubectl -n argocd patch application hello-school --type merge \
   -p '{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true},"syncOptions":["CreateNamespace=true"]}}}'
 ```
+
+## ✅ Verify — what you should see
+
+Step A: after removing `syncPolicy` and scaling to 3, `kubectl -n argocd get application hello-school` shows `OutOfSync` and *stays* that way; the UI shows a yellow tile, a Diff view with `replicas: 2 → 3`, and a **Sync** button. Step B: after syncing, `Synced` and 2 pods. Step C: fully automated again — scale once more and watch it revert.
+
+## 🧹 Clean up
+
+Make sure step C ran (automated + prune + selfHeal restored) or lessons 09–10 behave differently. Nothing else to remove.
+
+## ⚠️ Common mistakes
+
+- turning on `prune` first — a resource you removed from git *on purpose to keep it* disappears
+- `selfHeal` fighting an HPA or an operator that writes `replicas` or status fields — add `ignoreDifferences` (lesson 09)
+- reading `OutOfSync` as an error and "fixing" it with kubectl — the fix is a sync or a commit
+- leaving a production app on manual sync forever because nobody trusts the book — fix the review process, then flip the switch
+
+> 🏭 **Why this matters in production:** most teams run automated + selfHeal, and add prune per app once all of its resources are in git; sync waves and hooks order the sync (CRDs and namespaces first, migrations before Deployments). Start manual while learning; turn each dial on deliberately, with safeguards.
 
 ## ⏭️ Next
 
